@@ -17,7 +17,7 @@ Education          0.085***       0.072***       0.068***
                   (0.004)        (0.004)        (0.004)
 Experience         0.034***       0.030***       0.029***
                   (0.002)        (0.002)        (0.002)
-Experience²/100   -0.056***      -0.049***      -0.047***
+Experience^2/100  -0.056***      -0.049***      -0.047***
                   (0.005)        (0.004)        (0.004)
 Female            -0.183***      -0.156***      -0.142***
                   (0.012)        (0.011)        (0.011)
@@ -36,7 +36,7 @@ Notes: Standard errors in parentheses.
 *** p<0.01, ** p<0.05, * p<0.10.
 Education: years of schooling completed.
 Experience: years of potential labor market experience (age - education - 6).
-Experience²/100: squared experience divided by 100.
+Experience^2/100: squared experience divided by 100.
 Female: dummy variable, 1 if female, 0 if male.
 Married: dummy variable, 1 if married, 0 otherwise.
 Union: dummy variable, 1 if union member, 0 otherwise.
@@ -93,14 +93,14 @@ Data source: China Industrial Enterprise Database, 2005-2015.
 ```
                     (1)            (2)            (3)
 ----------------------------------------------------------
-Post × Treat        2.345***       1.987**        1.876**
+Post x Treat        2.345***       1.987**        1.876**
                   (0.634)        (0.598)        (0.587)
 Post                0.112         -0.045         -0.067
                   (0.423)        (0.401)        (0.398)
-Treat               -1.234**      -0.987*        -0.934*
+Treat              -1.234**       -0.987*        -0.934*
                   (0.512)        (0.534)        (0.528)
-Population log                                     0.234
-                                                  (0.189)
+Log population                                  0.234
+                                               (0.189)
 Constant           72.345***      68.234***      66.789***
                   (0.456)        (0.523)        (1.234)
 ----------------------------------------------------------
@@ -114,7 +114,7 @@ Notes: Standard errors clustered at the county level in parentheses.
 Post: dummy, 1 for periods after policy implementation (2015+), 0 otherwise.
 Treat: dummy, 1 for counties in the treatment group, 0 for control group.
 Post x Treat: interaction term; the DiD estimator of the policy effect.
-Population log: natural logarithm of county population.
+Log population: natural logarithm of county population.
 Employment rate: employed persons / working-age population x 100.
 Data source: County Statistical Yearbook, 2010-2020.
 ```

@@ -81,6 +81,6 @@ Notes: Standard errors in parentheses.
 1. **Determine specification**: DV, key IVs, controls, fixed effects.
 2. **Collect estimates**: coefficients, SEs, p-values from output.
 3. **Assign stars** based on p-values per thresholds above.
-4. **Build table** following structure — columns = models, rows = variables.
+4. **Build table** following structure -- columns = models, rows = variables.
 5. **Write notes**: significance legend, then each variable's definition and unit.
 6. **Verify**: every coefficient has 3 decimals, every SE in parentheses, stars match p-values.
