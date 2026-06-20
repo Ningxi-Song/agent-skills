@@ -1,6 +1,6 @@
-# OpenCode Agent Skills
+# Agent Skills
 
-A collection of agent skills for [opencode](https://opencode.ai) - an interactive CLI tool for software engineering tasks.
+A collection of reusable agent skills for AI-powered coding assistants (opencode, Claude Code, Codex, etc.).
 
 ## Skills
 
@@ -22,4 +22,8 @@ A collection of agent skills for [opencode](https://opencode.ai) - an interactiv
 
 ## Usage
 
-Clone into `~/.agents/skills/` (Windows: `%USERPROFILE%\.agents\skills\`) and opencode will auto-discover them.
+Clone into `~/.agents/skills/` and any compatible agent will auto-discover them.
+
+```bash
+git clone https://github.com/Ningxi-Song/agent-skills.git ~/.agents/skills
+```
