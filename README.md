@@ -20,6 +20,7 @@ A collection of reusable agent skills for AI-powered coding assistants (opencode
 | **write-a-skill** | Create new agent skills with proper structure |
 | **zoom-out** | Zoom out for broader context / higher-level perspective |
 | **econ-regression-table** | Format regression tables to economics journal standards |
+| **econ-summary-stats** | Produce summary statistics tables with sample transparency and balance tests |
 
 ## Usage
 
