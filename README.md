@@ -19,6 +19,7 @@ A collection of reusable agent skills for AI-powered coding assistants (opencode
 | **triage** | Triage issues through a state machine |
 | **write-a-skill** | Create new agent skills with proper structure |
 | **zoom-out** | Zoom out for broader context / higher-level perspective |
+| **econ-regression-table** | Format regression tables to economics journal standards |
 
 ## Usage
 
