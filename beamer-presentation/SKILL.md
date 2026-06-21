@@ -128,7 +128,8 @@ Titles must fit on one line. If a title wraps, shorten it.
 Content must breathe. Whitespace is not wasted space -- it guides attention.
 
 **Minimum spacing rules:**
-- Content area should occupy roughly 60-75% of the slide; never exceed 85%.
+- Whitespace should occupy approximately 35%-40% of the total slide area
+  (content should fill no more than 60%-65%). Never let content exceed 75%.
 - At least one blank line equivalent between the title frame and body.
 - At least one blank line equivalent between a figure/table and the bullets
   that follow.
