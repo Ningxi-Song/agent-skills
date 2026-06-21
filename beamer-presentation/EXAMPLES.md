@@ -389,4 +389,48 @@ unintentional hierarchy that the presenter did not design.
 Why good: all text shares the same font size. The takeaway is just the
 last bullet -- no artificial visual hierarchy. The audience reads all
 points equally.
+
+---
+
+## Example 8: Bad vs. Good -- Horizontal Balance
+
+### Bad: Left-Clustered, Unbalanced Whitespace
+
+```
+\begin{frame}{Conclusion: Long-run IV is fragile}
+\begin{itemize}
+  \item Short-run TI designs can still fail through climate confounding.
+  \item Aggregation makes TI increasingly weather- and climate-like.
+  \item Census pseudo-significance weakens when geography is restricted.
+\end{itemize}
+
+\vspace{1.2cm}
+
+{\large Takeaway:} long-run TI-IV estimates are diagnostic, not clean
+causal pollution effects.
+\end{frame}
+```
+
+Why bad: content clusters in the left ~50% of the slide. The right half
+is empty. The vertical gap between bullets and takeaway is also too large,
+pushing the takeaway to the bottom while the right side is barren.
+Whitespace is concentrated in the wrong place.
+
+### Good: Centered Content, Balanced Whitespace
+
+```
+\begin{frame}{Conclusion: Long-run IV is fragile}
+\begin{itemize}
+  \item Short-run TI designs can still fail through climate confounding.
+  \item Aggregation makes TI increasingly weather- and climate-like.
+  \item Census pseudo-significance weakens when geography is restricted.
+  \item Takeaway: long-run TI-IV estimates are diagnostic, not clean
+    causal pollution effects.
+\end{itemize}
+\end{frame}
+```
+
+Why good: content fills the available text width naturally (Beamer's
+default `\textwidth` is already centered). Whitespace is distributed
+evenly on all sides. No visual dead zone.
 ```

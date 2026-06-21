@@ -148,9 +148,18 @@ Content must breathe. Whitespace is not wasted space -- it guides attention.
 - Single bullet filling the entire text width as a long line -- shorten
   it or break into sub-bullets.
 
+**Horizontal balance:**
+- Content must be roughly horizontally centered within the frame.
+- Whitespace must be distributed evenly on all sides, never concentrated on
+  one side.
+- Never: content clustered on the left with a large empty area on the right.
+- Use `\centering` for figures and tables, and let Beamer's default margins
+  handle horizontal alignment for itemize blocks.
+
 **Visual check:** if you squint at the slide and content looks like a solid
 block, there is not enough whitespace. You should see a clear separation
-between title, body, and each visual element.
+between title, body, and each visual element. Whitespace should feel
+balanced, not pushed to one side.
 
 ### 8. Emphasis Formatting Use Sparingly
 
