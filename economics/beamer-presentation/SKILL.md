@@ -13,6 +13,33 @@ description: >
 Produce academic presentation slides that meet economics seminar standards.
 See [EXAMPLES.md](EXAMPLES.md) for a complete deck outline.
 
+## CRITICAL RULES — READ BEFORE GENERATING ANY SLIDE
+
+These rules override everything else. Violate none of them.
+
+1. **NO EMPTY BOTTOM.** If content ends above the vertical midpoint, the slide
+   is broken. Fix: add content, split across slides, or use `\vfill` to push
+   space evenly top-to-bottom.
+
+2. **NO `\Large` / `\large` IN BODY TEXT.** Never use size-changing commands
+   for emphasis. Use bold or color instead. All bullet text must be the same
+   size. All table cell text must be the same size.
+
+3. **CENTER EVERYTHING.** Tables use `\centering`. Figures use `\centering`.
+   Itemize blocks rely on Beamer defaults — do not manually adjust
+   `\textwidth` or `\hspace` to push content to one side.
+
+4. **FRAME TITLES FIT ON ONE LINE.** Every frame title (the slide title bar)
+   must fit on one line. The title slide may span multiple lines.
+
+5. **3–5 BULLETS PER SLIDE.** Each bullet is one line, one clause. No
+   paragraphs. No multi-line bullets.
+
+6. **WHITESPACE 35–40%.** Content fills 60–65% of the slide. Never exceed 75%.
+   Whitespace is distributed evenly on all sides.
+
+---
+
 ## Core Principle
 
 Slides serve the audience, not the paper. Every slide must advance understanding
@@ -278,3 +305,16 @@ at 14pt with a footnote at 12pt and a header at 16pt.
    emphasis used only once per slide, blocks used at most 2-3 times in entire deck,
    no paragraphs, consistent font sizes within category (no \Large/\large in body),
    every text item fits on one line, no large empty bottom area, content horizontally centered.
+
+---
+
+## PRE-FLIGHT CHECKLIST — VERIFY EVERY SLIDE
+
+Before outputting any slide, check these 6 items. If any fails, fix first.
+
+- [ ] Frame title fits on ONE line (not wrapping).
+- [ ] Bottom third of slide is NOT empty (content fills 60–65%).
+- [ ] No `\Large`, `\large`, or inline size changes in body text.
+- [ ] All bullet text same size. All table cell text same size.
+- [ ] Table or figure uses `\centering`, not left-aligned.
+- [ ] 3–5 bullet points, each on one line, no paragraphs.
