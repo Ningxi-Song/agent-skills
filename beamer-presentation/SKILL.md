@@ -132,6 +132,28 @@ Content must not be crowded. Leave visible whitespace between:
 
 If content fills the slide edge-to-edge, split into two slides.
 
+### 8. Emphasis Formatting Use Sparingly
+
+Bold, italic, color, and block environments highlight key points. Overuse
+defeats their purpose -- when everything is emphasized, nothing is.
+
+- Use emphasis on at most **one element per slide** (e.g., the main coefficient).
+- Use bold or color to mark the **main finding** in a bullet or table cell.
+- Use block environments (`\begin{block}...`) only for the central takeaway.
+- Never: entire bullet lists in bold, colored text throughout, blocks on
+  every slide.
+
+### 9. Bullet Points, Never Paragraphs
+
+Full sentences and paragraphs belong in the paper, not on slides. The audience
+reads slides faster than the speaker talks; paragraphs make them read instead
+of listen.
+
+- Every text element must fit on **one line** (no multi-line bullets).
+- Break complex statements into a bullet group of 2-3 short items.
+- If a point requires a paragraph of explanation, move it to speaker notes
+  or the appendix.
+
 ---
 
 ## Beamer Structure Template
@@ -178,4 +200,5 @@ If content fills the slide edge-to-edge, split into two slides.
 4. **Replace tables with figures** wherever possible.
 5. **Strip tables to essentials**: coefficient, SE, baseline mean, N only.
 6. **Build appendix**: move all full tables, definitions, extra checks there.
-7. **Check formatting**: single-line titles, >=18pt body, 3-5 bullets, proper spacing.
+7. **Check formatting**: single-line titles, >=18pt body, 3-5 bullets, proper spacing,
+   emphasis used only once per slide, no paragraphs, every text item fits on one line.

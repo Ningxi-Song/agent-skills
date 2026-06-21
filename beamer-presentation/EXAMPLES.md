@@ -263,3 +263,84 @@ Slide B:
 
 Why good: each slide has one job, 4 bullets max, bullet fragments not full
 sentences, title is a conclusion.
+
+---
+
+## Example 5: Bad vs. Good Use of Emphasis
+
+### Bad: Overused Emphasis
+
+```
+\begin{frame}{\textbf{The reform \textcolor{red}{increased} employment in \textit{all}} sectors}
+\begin{itemize}
+  \item \textbf{Treatment effect}: \textcolor{blue}{5.4 pp} (p < 0.01)
+  \item \textbf{Manufacturing}: \textcolor{blue}{6.2 pp} (p < 0.01)
+  \item \textbf{Services}: \textcolor{blue}{4.8 pp} (p < 0.05)
+  \item \textbf{Construction}: \textcolor{blue}{3.1 pp} (p < 0.10)
+  \item \textbf{Agriculture}: \textcolor{blue}{2.0 pp} (not significant)
+\end{itemize}
+\end{frame}
+```
+
+Why bad: bold everywhere, color everywhere, italic in title -- nothing stands out
+because everything is marked as important. The audience cannot identify the
+one thing they should remember.
+
+### Good: Single Point of Emphasis
+
+```
+\begin{frame}{The reform increased employment by 5.4 percentage points}
+\begin{itemize}
+  \item Treatment effect: \textbf{5.4 pp} (SE = 1.2, p < 0.01)
+  \item Baseline employment rate: 68.3\%
+  \item Implies a 7.9\% increase relative to baseline
+  \item Positive effects across manufacturing, services, and construction
+    (see Appendix Table B2)
+\end{itemize}
+\end{frame}
+```
+
+Why good: only the main coefficient is bolded. The audience immediately
+knows what to focus on. The title carries the main message.
+
+---
+
+## Example 6: Bad vs. Good -- Bullet Points vs. Paragraphs
+
+### Bad: Paragraph Text on Slides
+
+```
+\begin{frame}{Data}
+Our analysis draws on the China Industrial Enterprise Database (CIED) for the
+period 2005-2015, which is maintained by the National Bureau of Statistics and
+covers all state-owned industrial firms as well as non-state firms with annual
+revenue exceeding 5 million CNY. The database includes detailed information on
+firm balance sheets, income statements, and basic firm demographics such as
+ownership type, industry code, and location. We merge this firm-level panel
+with county-level fiscal data from the County Statistical Yearbook and patent
+data from the State Intellectual Property Office. After dropping observations
+with missing key variables and winsorizing continuous variables at the 1st and
+99th percentiles, our final estimation sample consists of 2.3 million
+firm-year observations.
+\end{frame}
+```
+
+Why bad: the audience reads this paragraph while you speak. They finish reading
+before you finish talking and tune out. 60 seconds of silence while eyes scan.
+
+### Good: Bullet-Point Summary
+
+```
+\begin{frame}{We use administrative firm data covering 2.3 million observations}
+\begin{itemize}
+  \item China Industrial Enterprise Database (CIED), 2005-2015
+  \item All SOEs and non-state firms with revenue > 5M CNY
+  \item Merged with county fiscal data and patent records
+  \item Final sample: 2.3 million firm-year observations
+\end{itemize}
+\end{frame}
+```
+
+Why good: each bullet is one phrase. Audience scans quickly, then listens.
+Speaker can elaborate verbally on each point. No one reads ahead.
+```
