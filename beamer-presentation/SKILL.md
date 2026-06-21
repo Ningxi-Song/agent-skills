@@ -125,12 +125,28 @@ Titles must fit on one line. If a title wraps, shorten it.
 
 ### 7. Adequate Spacing
 
-Content must not be crowded. Leave visible whitespace between:
-- Bullet groups.
-- Figure/table and surrounding text.
-- Title and body.
+Content must breathe. Whitespace is not wasted space -- it guides attention.
 
-If content fills the slide edge-to-edge, split into two slides.
+**Minimum spacing rules:**
+- Content area should occupy roughly 60-75% of the slide; never exceed 85%.
+- At least one blank line equivalent between the title frame and body.
+- At least one blank line equivalent between a figure/table and the bullets
+  that follow.
+- Itemize environments: use `\setlength{\itemsep}{4pt}` or similar -- never
+  the default tight item spacing, never stretched to fill the page.
+
+**What to avoid:**
+- `\vfill` between every element -- creates uneven, floating gaps.
+- `[shrink]` frame option -- if content needs shrinking, it belongs on two
+  slides or the appendix.
+- Content touching or nearly touching the frame edges -- keep natural
+  Beamer margins intact.
+- Single bullet filling the entire text width as a long line -- shorten
+  it or break into sub-bullets.
+
+**Visual check:** if you squint at the slide and content looks like a solid
+block, there is not enough whitespace. You should see a clear separation
+between title, body, and each visual element.
 
 ### 8. Emphasis Formatting Use Sparingly
 
