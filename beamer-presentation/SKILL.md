@@ -174,6 +174,20 @@ of listen.
 - If a point requires a paragraph of explanation, move it to speaker notes
   or the appendix.
 
+### 10. Consistent Font Sizes Within Category
+
+Text in the same category must share the same font size. Unjustified size
+variation signals carelessness and confuses the reading hierarchy.
+
+- All bullet text: same size throughout the slide.
+- All table cell text: same size within a table.
+- All figure axis labels and legends: same size across all figures.
+- Takeaway boxes (`\begin{block}`) inside a slide: same font size as
+  surrounding bullets, not larger to "stand out."
+
+Never: a bullet at 18pt with a nearby "takeaway" at 22pt, or table body
+at 14pt with a footnote at 12pt and a header at 16pt.
+
 ---
 
 ## Beamer Structure Template
@@ -221,4 +235,5 @@ of listen.
 5. **Strip tables to essentials**: coefficient, SE, baseline mean, N only.
 6. **Build appendix**: move all full tables, definitions, extra checks there.
 7. **Check formatting**: single-line frame titles, >=18pt body, 3-5 bullets, proper spacing,
-   emphasis used only once per slide, no paragraphs, every text item fits on one line.
+   emphasis used only once per slide, no paragraphs, consistent font sizes within category,
+   every text item fits on one line.

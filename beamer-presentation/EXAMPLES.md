@@ -343,4 +343,50 @@ before you finish talking and tune out. 60 seconds of silence while eyes scan.
 
 Why good: each bullet is one phrase. Audience scans quickly, then listens.
 Speaker can elaborate verbally on each point. No one reads ahead.
+
+---
+
+## Example 7: Bad vs. Good -- Consistent Font Sizes
+
+### Bad: Inconsistent Font Sizes Within One Slide
+
+```
+\begin{frame}{Conclusion: Long-run IV is fragile}
+\begin{itemize}
+  \item Short-run TI designs can still fail through climate confounding.
+  \item Aggregation makes TI increasingly weather- and climate-like.
+  \item Census pseudo-significance weakens when geography is restricted.
+\end{itemize}
+
+\vspace{0.4cm}
+
+\begin{block}{}
+  {\Large Takeaway:} long-run TI-IV estimates are diagnostic, not clean
+  causal pollution effects.
+\end{block}
+\end{frame}
+```
+
+Why bad: the "Takeaway" block text is visibly larger than the bullets above
+it. The audience's eyes jump to the bigger text, but the bullets above
+contain equally important content. The size difference creates an
+unintentional hierarchy that the presenter did not design.
+
+### Good: Same Font Size Throughout
+
+```
+\begin{frame}{Conclusion: Long-run IV is fragile}
+\begin{itemize}
+  \item Short-run TI designs can still fail through climate confounding.
+  \item Aggregation makes TI increasingly weather- and climate-like.
+  \item Census pseudo-significance weakens when geography is restricted.
+  \item Takeaway: long-run TI-IV estimates are diagnostic, not clean
+    causal pollution effects.
+\end{itemize}
+\end{frame}
+```
+
+Why good: all text shares the same font size. The takeaway is just the
+last bullet -- no artificial visual hierarchy. The audience reads all
+points equally.
 ```
