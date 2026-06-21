@@ -119,9 +119,12 @@ No: control variable rows, fixed effects rows, R-squared rows (move to appendix)
 - Footer (author, institution, date, slide number) uniform.
 - Figure and table styles match (same colors, line widths, marker sizes).
 
-### 6. Single-Line Titles
+### 6. Single-Line Frame Titles
 
-Titles must fit on one line. If a title wraps, shorten it.
+Every frame title (the slide title bar at the top of each content slide)
+must fit on one line. If a frame title wraps, shorten it.
+
+The main title on the title slide may span multiple lines.
 
 ### 7. Adequate Spacing
 
@@ -217,5 +220,5 @@ of listen.
 4. **Replace tables with figures** wherever possible.
 5. **Strip tables to essentials**: coefficient, SE, baseline mean, N only.
 6. **Build appendix**: move all full tables, definitions, extra checks there.
-7. **Check formatting**: single-line titles, >=18pt body, 3-5 bullets, proper spacing,
+7. **Check formatting**: single-line frame titles, >=18pt body, 3-5 bullets, proper spacing,
    emphasis used only once per slide, no paragraphs, every text item fits on one line.
