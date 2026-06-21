@@ -168,9 +168,20 @@ defeats their purpose -- when everything is emphasized, nothing is.
 
 - Use emphasis on at most **one element per slide** (e.g., the main coefficient).
 - Use bold or color to mark the **main finding** in a bullet or table cell.
-- Use block environments (`\begin{block}...`) only for the central takeaway.
-- Never: entire bullet lists in bold, colored text throughout, blocks on
-  every slide.
+- Never: entire bullet lists in bold, colored text throughout.
+
+**Block environments (`\begin{block}`) — deck-level rule:**
+
+Blocks are the strongest visual emphasis in Beamer. Reserve them for the
+one or two most important takeaways in the entire deck.
+
+- Use at most **2-3 blocks across the entire slide deck**, not per slide.
+- Best candidates: the main finding, the identification strategy, the
+  single most important policy implication.
+- Never: a block on every slide, blocks for intermediate observations,
+  blocks for variable definitions or data descriptions.
+- If you find yourself reaching for a block, ask: "Would this lose meaning
+  without it?" If yes, use it. If no, use a bullet instead.
 
 ### 9. Bullet Points, Never Paragraphs
 
@@ -244,5 +255,5 @@ at 14pt with a footnote at 12pt and a header at 16pt.
 5. **Strip tables to essentials**: coefficient, SE, baseline mean, N only.
 6. **Build appendix**: move all full tables, definitions, extra checks there.
 7. **Check formatting**: single-line frame titles, >=18pt body, 3-5 bullets, proper spacing,
-   emphasis used only once per slide, no paragraphs, consistent font sizes within category,
-   every text item fits on one line.
+   emphasis used only once per slide, blocks used at most 2-3 times in entire deck,
+   no paragraphs, consistent font sizes within category, every text item fits on one line.

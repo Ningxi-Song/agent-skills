@@ -433,4 +433,81 @@ Whitespace is concentrated in the wrong place.
 Why good: content fills the available text width naturally (Beamer's
 default `\textwidth` is already centered). Whitespace is distributed
 evenly on all sides. No visual dead zone.
+
+---
+
+## Example 9: Bad vs. Good -- Block Overuse
+
+### Bad: Blocks on Every Slide
+
+```
+Slide 4  - Data
+\begin{frame}{We use administrative firm data}
+\begin{block}{Data Source}
+  China Industrial Enterprise Database (CIED), 2005-2015
+\end{block}
+\begin{block}{Sample Size}
+  2.3 million firm-year observations across 2,500 counties
+\end{block}
+\end{frame}
+
+Slide 5  - Empirical Strategy
+\begin{frame}{Stacked DiD with clean controls}
+\begin{block}{Treatment}
+  Counties that raised minimum wages by >= 10%
+\end{block}
+\begin{block}{Control}
+  Counties with no increase in the same period
+\end{block}
+\end{frame}
+
+Slide 8  - Main Result
+\begin{frame}{The reform increased employment by 5.4 pp}
+\begin{block}{Key Finding}
+  Coefficient: 5.4*** (SE = 1.2)
+\end{block}
+\begin{block}{Baseline Mean}
+  Employment rate: 68.3%
+\end{block}
+\end{frame}
+```
+
+Why bad: blocks appear 6 times across 3 slides. The audience stops
+noticing them. The visual hierarchy collapses -- if everything is in a
+block, nothing stands out.
+
+### Good: Blocks Reserved for Core Takeaways Only
+
+```
+Slide 4  - Data (no block)
+\begin{frame}{We use administrative firm data}
+\begin{itemize}
+  \item China Industrial Enterprise Database (CIED), 2005-2015
+  \item 2.3 million firm-year observations across 2,500 counties
+  \item Merged with county fiscal data and patent records
+\end{itemize}
+\end{frame}
+
+Slide 5  - Empirical Strategy (no block)
+\begin{frame}{Stacked DiD with clean controls}
+\begin{itemize}
+  \item Treatment: counties that raised minimum wages by >= 10%
+  \item Control: counties with no increase in the same period
+  \item Identifying assumption: parallel trends in employment
+\end{itemize}
+\end{frame}
+
+Slide 8  - Main Result (ONE block for the central finding)
+\begin{frame}{The reform increased employment by 5.4 percentage points}
+\begin{block}{}
+  Treatment effect: \textbf{5.4 pp} (SE = 1.2, p < 0.01)
+  vs. baseline mean of 68.3\%
+\end{block}
+\end{frame}
+```
+
+Why good: the block appears only once in the entire deck, on the single
+most important slide. The audience immediately recognizes: "this is the
+main finding." All other slides use plain bullets -- the block's
+scarcity is what gives it power.
 ```
