@@ -148,6 +148,15 @@ Content must breathe. Whitespace is not wasted space -- it guides attention.
 - Single bullet filling the entire text width as a long line -- shorten
   it or break into sub-bullets.
 
+**Bottom whitespace rule:**
+- The bottom third of the slide must not be empty.
+- If content ends above the vertical midpoint, the slide has too much
+  whitespace. Fix by: (a) adding content, (b) splitting the previous
+  slide's content across two slides, or (c) using `\vfill` to distribute
+  space evenly from top to bottom.
+- Never leave a slide where bullets end in the middle and the bottom half
+  is blank -- this signals poor planning.
+
 **Horizontal balance:**
 - Content must be roughly horizontally centered within the frame.
 - Whitespace must be distributed evenly on all sides, never concentrated on
@@ -155,6 +164,9 @@ Content must breathe. Whitespace is not wasted space -- it guides attention.
 - Never: content clustered on the left with a large empty area on the right.
 - Use `\centering` for figures and tables, and let Beamer's default margins
   handle horizontal alignment for itemize blocks.
+- Do not manually adjust `\textwidth`, `\hsize`, or use `\hspace` to push
+  content to one side. If content is off-center, it is a layout bug.
+- A slide with a table: the table itself must be centered, not left-aligned.
 
 **Visual check:** if you squint at the slide and content looks like a solid
 block, there is not enough whitespace. You should see a clear separation
@@ -204,6 +216,14 @@ variation signals carelessness and confuses the reading hierarchy.
 - All figure axis labels and legends: same size across all figures.
 - Takeaway boxes (`\begin{block}`) inside a slide: same font size as
   surrounding bullets, not larger to "stand out."
+
+**Explicitly forbidden in slide body text:**
+- `\Large`, `\large`, `\Large*`, `\large*` -- never use these for emphasis
+  within a slide. They create visible size jumps that break visual hierarchy.
+- `\footnotesize` or `\scriptsize` for body text (only allowed in
+  footnotes or source citations below figures).
+- Inline font size changes like `{\large some text}` -- this is the most
+  common violation. If you want to emphasize text, use bold or color, not size.
 
 Never: a bullet at 18pt with a nearby "takeaway" at 22pt, or table body
 at 14pt with a footnote at 12pt and a header at 16pt.
@@ -256,4 +276,5 @@ at 14pt with a footnote at 12pt and a header at 16pt.
 6. **Build appendix**: move all full tables, definitions, extra checks there.
 7. **Check formatting**: single-line frame titles, >=18pt body, 3-5 bullets, proper spacing,
    emphasis used only once per slide, blocks used at most 2-3 times in entire deck,
-   no paragraphs, consistent font sizes within category, every text item fits on one line.
+   no paragraphs, consistent font sizes within category (no \Large/\large in body),
+   every text item fits on one line, no large empty bottom area, content horizontally centered.
