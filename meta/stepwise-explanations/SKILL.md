@@ -7,30 +7,26 @@ description: Break long explanations, reports, tutorials, implementation walkthr
 
 Use this skill to pace long answers so the user can read and retain each part before moving on.
 
-## Core Rule
+## Quick Start
 
-For any answer that would be long, multi-step, or conceptually dense, do not deliver the whole explanation at once.
-
-Instead:
+For any answer that would be long, multi-step, or conceptually dense, deliver it one readable chunk at a time:
 
 1. Start with a short roadmap.
 2. Explain only the first chunk.
 3. Stop and ask whether to continue.
 4. Continue one chunk at a time after the user confirms.
 
-## Chunk Size
+## Workflow
 
-Keep each chunk small enough to fit on one screen:
+### 1. Decide Whether to Pace
 
-- Aim for 150-300 words.
-- Use at most 3-5 bullets.
-- Include only one main idea per chunk.
-- Avoid long tables unless the user explicitly asks for them.
-- Prefer compact code snippets over full files.
+Use this skill when the user asks for step-by-step explanation, says long answers are hard to read, asks to proceed slowly, or when a complete answer would require substantial scrolling.
 
-## Opening Pattern
+Do not use it for short answers, status updates, or one-step fixes.
 
-Begin with a roadmap like:
+### 2. Give a Roadmap
+
+Begin with a compact outline:
 
 ```text
 I will explain this in 5 parts:
@@ -43,9 +39,17 @@ I will explain this in 5 parts:
 I will start with Part 1 and pause before Part 2.
 ```
 
-Then give Part 1 only.
+### 3. Keep Each Chunk Small
 
-## Pause Pattern
+Keep each chunk small enough to fit on one screen:
+
+- Aim for 150-300 words.
+- Use at most 3-5 bullets.
+- Include only one main idea per chunk.
+- Avoid long tables unless the user explicitly asks for them.
+- Prefer compact code snippets over full files.
+
+### 4. Pause Explicitly
 
 End each chunk with a simple continuation question:
 
@@ -53,7 +57,7 @@ End each chunk with a simple continuation question:
 Say "continue" and I will explain Part 2.
 ```
 
-Do not continue automatically unless the user has clearly asked for the full report in one message.
+Do not continue automatically unless the user has clearly asked for the full explanation in one message.
 
 ## When User Asks "Step by Step"
 
@@ -83,18 +87,13 @@ You may answer normally when:
 
 ## Style
 
-Use clear headings, short paragraphs, and plain language.
+Use clear headings, short paragraphs, and plain language. Prefer numbered part headings and avoid dumping a full multi-section explanation into one response.
 
-Prefer:
+## Review Checklist
 
-```text
-Part 1: The causal question
-...
-Say "continue" and I will explain Part 2.
-```
+Before sending a paced explanation, verify:
 
-Avoid:
-
-```text
-Here is a full 20-section explanation...
-```
+- [ ] The roadmap is short.
+- [ ] The current chunk has one main idea.
+- [ ] The chunk is short enough to read without scrolling much.
+- [ ] The response stops with a clear continuation prompt.
