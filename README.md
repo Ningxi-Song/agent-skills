@@ -65,6 +65,7 @@ skills/
 | **find-skills** | Helps users discover and install agent skills |
 | **write-a-skill** | Create new agent skills with proper structure |
 | **setup-matt-pocock-skills** | Sets up Agent skills block in AGENTS.md/CLAUDE.md |
+| **stepwise-explanations** | Break long answers into small readable chunks with pause points |
 
 ## Usage
 
