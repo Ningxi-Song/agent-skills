@@ -15,12 +15,15 @@ Do not focus on research design, causal identification, regression readiness, or
    - State what the dataset appears to measure.
    - Mention the main subject, sector, or topic.
    - Mention the broad geographic and time context when visible.
+   - State the geographic scope when visible: national, subnational, regional, selected locations, or unclear.
    - Use a plain sentence, such as: "This is a county-level panel dataset of PM2.5 intensity in China."
 
 2. Describe the data structure:
    - Identify whether the data appear to be panel, cross-sectional, time series, repeated cross-section, or unclear.
    - Identify the unit of observation.
    - Identify the geographic unit, such as country, province, city, county, grid cell, firm, household, or individual.
+   - Identify the geographic coverage separately from the geographic unit: which country, states, provinces, cities, regions, or sample locations are included.
+   - Say whether the coverage appears comprehensive for that geography, such as national coverage, all counties in a country, selected regions only, or unknown.
    - Identify the time period covered.
    - Identify the time frequency, such as daily, monthly, quarterly, yearly, or irregular.
    - If the data are panel data, note whether the panel appears balanced or unbalanced when this can be checked.
@@ -39,6 +42,7 @@ Do not focus on research design, causal identification, regression readiness, or
    - Missing or unclear ID variables.
    - Missing or unclear time variables.
    - Ambiguous geographic units.
+   - Ambiguous geographic coverage, such as whether the data are national or only cover selected regions.
    - Variable names that require a codebook.
    - Obvious duplicates or gaps in coverage.
 
@@ -48,6 +52,7 @@ Return a concise preliminary audit memo with these sections:
 
 - Brief data introduction
 - Data structure
+- Geographic coverage
 - Data details
 - Immediate questions or concerns
 - Suggested next checks
