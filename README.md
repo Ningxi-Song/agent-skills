@@ -9,7 +9,8 @@ skills/
 ├── economics/              Economics research & presentation
 │   ├── econ-regression-table
 │   ├── econ-summary-stats
-│   └── beamer-presentation
+│   ├── beamer-presentation
+│   └── preliminary-data-audit
 ├── engineering/            Software engineering practices
 │   ├── diagnose
 │   ├── tdd
@@ -38,6 +39,7 @@ skills/
 | **econ-regression-table** | Format regression tables to economics journal standards | Willie Song |
 | **econ-summary-stats** | Produce summary statistics tables with sample transparency and balance tests | Willie Song |
 | **beamer-presentation** | Design academic Beamer slides with conclusion-driven titles and one-point-per-slide | Willie Song |
+| **preliminary-data-audit** | Produce a first-pass dataset audit covering introduction, structure, coverage, units, variables, and basic dimensions | Willie Song |
 
 ### engineering/
 
