@@ -46,7 +46,7 @@ The skill will not:
 The skill is a single modular package with one trigger and a shared verification core:
 
 ```text
-skills/latex/verify-tikz-layout/
+latex/verify-tikz-layout/
 ├── SKILL.md
 ├── agents/
 │   └── openai.yaml
@@ -211,7 +211,7 @@ The validation must demonstrate:
 The canonical version will live at:
 
 ```text
-Ningxi-Song/agent-skills/skills/latex/verify-tikz-layout/
+Ningxi-Song/agent-skills/latex/verify-tikz-layout/
 ```
 
 The repository README will add the `latex/` category, describe the skill, and state its strict visual-verification guarantee.
