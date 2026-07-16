@@ -296,6 +296,7 @@ class SkillContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertIn("COMPILED — VISUAL VERIFICATION UNAVAILABLE", skill)
         self.assertIn("It must never emit VISUALLY_VERIFIED", skill)
+        self.assertIn("at most five repair cycles", skill)
 
 
 if __name__ == "__main__":
@@ -838,7 +839,15 @@ Expected: RENDERED_PENDING_REVIEW and PNG evidence. Open every PNG. Record the n
 & 'C:\Users\HKUBS\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' latex/verify-tikz-layout/scripts/prepare_tikz_review.py tests/verify-tikz-layout/fixtures/paper-column-pressure.tex --context paper --output-dir tests/verify-tikz-layout/.artifacts/paper
 ~~~
 
-Expected: paper-page PNG evidence. Open every page, confirm the one-column failure, repair a work copy without deleting content, and inspect both isolated geometry and final page after rerendering.
+Expected: paper-page PNG evidence. Open every page and confirm the one-column failure.
+
+Create tests/verify-tikz-layout/.artifacts/paper/isolated.tex containing the complete tikzpicture block from the fixture, then run:
+
+~~~powershell
+& 'C:\Users\HKUBS\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' latex/verify-tikz-layout/scripts/prepare_tikz_review.py tests/verify-tikz-layout/.artifacts/paper/isolated.tex --context standalone --output-dir tests/verify-tikz-layout/.artifacts/paper-isolated
+~~~
+
+Open the isolated PNG as well. Repair a work copy without deleting content, then rerender and reinspect both the isolated diagram and the final paper page.
 
 - [ ] **Step 4: render and inspect every Beamer overlay**
 
