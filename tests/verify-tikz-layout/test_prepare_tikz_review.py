@@ -126,6 +126,107 @@ class FailClosedTests(unittest.TestCase):
                 manifest["status"], "VISUAL_VERIFICATION_UNAVAILABLE"
             )
 
+    def test_stale_pdf_cannot_satisfy_current_compile(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "paper.tex"
+            output = root / "out"
+            output.mkdir()
+            source.write_text(
+                r"\documentclass{article}\begin{document}x\end{document}",
+                encoding="utf-8",
+            )
+            (output / "paper.pdf").write_bytes(b"stale")
+
+            manifest = review.prepare(
+                source, output, "paper", "auto", None, 200,
+                which=lambda name: "pdflatex" if name == "pdflatex" else None,
+                runner=lambda command, **kwargs: subprocess.CompletedProcess(
+                    command, 0, "compiled without output", ""
+                ),
+            )
+
+            self.assertEqual(manifest["status"], "COMPILE_FAILED")
+
+    def test_stale_png_cannot_satisfy_current_render(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "paper.tex"
+            output = root / "out"
+            output.mkdir()
+            source.write_text(
+                r"\documentclass{article}\begin{document}x\end{document}",
+                encoding="utf-8",
+            )
+            (output / "target-page-1.png").write_bytes(b"stale")
+
+            def fake_which(name):
+                return {"pdflatex": "pdflatex", "pdftoppm.exe": "pdftoppm.exe"}.get(name)
+
+            def fake_runner(command, **kwargs):
+                if command[0] == "pdflatex":
+                    output_arg = next(
+                        item for item in command if item.startswith("-output-directory=")
+                    )
+                    compile_output = Path(output_arg.split("=", 1)[1])
+                    (compile_output / "paper.pdf").write_bytes(b"%PDF-current")
+                return subprocess.CompletedProcess(command, 0, "ok", "")
+
+            manifest = review.prepare(
+                source, output, "paper", "auto", [1], 200,
+                which=fake_which,
+                runner=fake_runner,
+            )
+
+            self.assertEqual(manifest["status"], "RENDER_FAILED")
+
+    def test_manifest_records_iteration_and_target_mapping(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "slides.tex"
+            output = root / "out"
+            source.write_text(
+                r"\documentclass{beamer}\begin{document}x\end{document}",
+                encoding="utf-8",
+            )
+
+            def fake_which(name):
+                return {"pdflatex": "pdflatex", "pdftoppm.exe": "pdftoppm.exe"}.get(name)
+
+            def fake_runner(command, **kwargs):
+                if command[0] == "pdflatex":
+                    output_arg = next(
+                        item for item in command if item.startswith("-output-directory=")
+                    )
+                    compile_output = Path(output_arg.split("=", 1)[1])
+                    compile_output.mkdir(parents=True, exist_ok=True)
+                    (compile_output / "slides.pdf").write_bytes(b"%PDF-current")
+                else:
+                    prefix = Path(command[-1])
+                    Path(f"{prefix}.png").write_bytes(b"png")
+                return subprocess.CompletedProcess(command, 0, "ok", "")
+
+            target_map = {3: {"figure": "causal-chain", "frame": 2, "overlay": 3}}
+            manifest = review.prepare(
+                source, output, "beamer", "auto", [3], 200,
+                iteration=2,
+                target_map=target_map,
+                which=fake_which,
+                runner=fake_runner,
+            )
+
+            self.assertEqual(manifest["iteration"], 2)
+            self.assertEqual(
+                manifest["rendered_targets"],
+                [{
+                    "path": str((output / "target-page-3.png").resolve()),
+                    "page": 3,
+                    "figure": "causal-chain",
+                    "frame": 2,
+                    "overlay": 3,
+                }],
+            )
+
 
 class SkillContractTests(unittest.TestCase):
     def test_required_wording(self):

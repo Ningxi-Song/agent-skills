@@ -20,7 +20,7 @@ Command:
 & 'C:\Users\HKUBS\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m unittest discover -s tests/verify-tikz-layout -p 'test_*.py' -v
 ```
 
-Result: 12 tests passed. The controlled missing-renderer test returned `VISUAL_VERIFICATION_UNAVAILABLE`, and `VISUALLY_VERIFIED` is absent from `ALLOWED_PREPARATION_STATUSES`.
+Result: 15 tests passed. The controlled missing-renderer test returned `VISUAL_VERIFICATION_UNAVAILABLE`, and `VISUALLY_VERIFIED` is absent from `ALLOWED_PREPARATION_STATUSES`. Regression tests also prove that stale PDFs and PNGs cannot satisfy a later run and that each manifest records its repair iteration plus page/figure/frame/overlay mappings.
 
 ## Skill pressure tests
 

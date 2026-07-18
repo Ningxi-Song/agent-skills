@@ -23,7 +23,7 @@ Run:
 
     python scripts/prepare_tikz_review.py SOURCE.tex --output-dir OUTPUT
 
-Pass `--context`, `--engine`, or `--pages` when automatic discovery is insufficient. Inspect `manifest.json` and `compile.log`.
+Pass `--context`, `--engine`, or `--pages` when automatic discovery is insufficient. Pass `--iteration` on every repair cycle and use `--target-map` JSON to associate PDF pages with figure, frame, and overlay identifiers. Inspect `manifest.json` and `compile.log`.
 
 The helper may emit only:
 

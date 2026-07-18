@@ -169,6 +169,8 @@ def prepare(
     requested_engine,
     pages,
     dpi,
+    iteration=1,
+    target_map=None,
     which=None,
     runner=None,
 ):
@@ -177,6 +179,9 @@ def prepare(
     source = Path(source).resolve()
     output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
+    if iteration < 1:
+        raise ValueError("iteration must be a positive integer")
+    target_map = {int(page): metadata for page, metadata in (target_map or {}).items()}
     text = source.read_text(encoding="utf-8")
     context = detect_context(text) if requested_context == "auto" else requested_context
 
@@ -191,13 +196,16 @@ def prepare(
         "context": context,
         "requested_pages": pages,
         "dpi": dpi,
+        "iteration": iteration,
         "status": "COMPILE_FAILED",
         "compiler": None,
         "renderer": None,
         "compile_command": None,
+        "compile_return_code": None,
         "render_commands": [],
         "warnings": [],
         "images": [],
+        "rendered_targets": [],
         "error": None,
     }
 
@@ -209,14 +217,19 @@ def prepare(
     manifest["compiler"] = compiler
     command = build_compile_command(compiler, compile_source, output_dir)
     manifest["compile_command"] = command
+    pdf = output_dir / f"{compile_source.stem}.pdf"
+    if pdf.exists():
+        pdf.unlink()
+    for stale_image in output_dir.glob("target-page*.png"):
+        stale_image.unlink()
     completed = runner(
         command, cwd=str(compile_cwd), capture_output=True, text=True, check=False
     )
+    manifest["compile_return_code"] = completed.returncode
     log = (completed.stdout or "") + "\n" + (completed.stderr or "")
     (output_dir / "compile.log").write_text(log, encoding="utf-8")
     manifest["warnings"] = scan_log(log)
 
-    pdf = output_dir / f"{compile_source.stem}.pdf"
     if completed.returncode != 0 or not pdf.exists():
         manifest["error"] = (
             f"LaTeX compilation failed with return code {completed.returncode}."
@@ -259,6 +272,19 @@ def prepare(
         return write_manifest(output_dir, manifest)
 
     manifest["images"] = [str(path.resolve()) for path in images]
+    for index, path in enumerate(images, start=1):
+        match = re.search(r"-page-(\d+)\.png$", path.name)
+        page = int(match.group(1)) if match else (
+            pages[index - 1] if pages and index <= len(pages) else index
+        )
+        metadata = target_map.get(page, {})
+        manifest["rendered_targets"].append({
+            "path": str(path.resolve()),
+            "page": page,
+            "figure": metadata.get("figure"),
+            "frame": metadata.get("frame"),
+            "overlay": metadata.get("overlay"),
+        })
     manifest["status"] = "RENDERED_PENDING_REVIEW"
     return write_manifest(output_dir, manifest)
 
@@ -277,6 +303,14 @@ def build_parser():
     parser.add_argument("--engine", default="auto")
     parser.add_argument("--pages", type=parse_pages)
     parser.add_argument("--dpi", type=int, default=200)
+    parser.add_argument("--iteration", type=int, default=1)
+    parser.add_argument(
+        "--target-map",
+        type=json.loads,
+        default=None,
+        metavar="JSON",
+        help="JSON metadata map keyed by rendered PDF page number.",
+    )
     return parser
 
 
@@ -284,8 +318,11 @@ def main(argv=None):
     args = build_parser().parse_args(argv)
     if args.dpi < 72:
         raise SystemExit("--dpi must be at least 72")
+    if args.iteration < 1:
+        raise SystemExit("--iteration must be a positive integer")
     manifest = prepare(
-        args.source, args.output_dir, args.context, args.engine, args.pages, args.dpi
+        args.source, args.output_dir, args.context, args.engine, args.pages, args.dpi,
+        iteration=args.iteration, target_map=args.target_map
     )
     print(json.dumps(manifest, indent=2, ensure_ascii=False))
     return 0 if manifest["status"] == "RENDERED_PENDING_REVIEW" else 1
