@@ -5,29 +5,30 @@ A collection of reusable agent skills for AI-powered coding assistants (opencode
 ## Structure
 
 ```
-skills/
-├── economics/              Economics research & presentation
-│   ├── econ-regression-table
-│   ├── econ-summary-stats
-│   ├── beamer-presentation
-│   └── preliminary-data-audit
-├── engineering/            Software engineering practices
-│   ├── diagnose
-│   ├── tdd
-│   ├── improve-codebase-architecture
-│   └── zoom-out
-├── planning/               Project management & planning
-│   ├── to-issues
-│   ├── to-prd
-│   ├── triage
-│   ├── grill-me
-│   └── grill-with-docs
-└── meta/                   Skill & agent management
-    ├── caveman
-    ├── find-skills
-    ├── write-a-skill
-    ├── setup-matt-pocock-skills
-    └── stepwise-explanations
+economics/              Economics research & presentation
+├── econ-regression-table
+├── econ-summary-stats
+├── beamer-presentation
+└── preliminary-data-audit
+engineering/            Software engineering practices
+├── diagnose
+├── tdd
+├── improve-codebase-architecture
+└── zoom-out
+latex/                  LaTeX visual verification
+└── verify-tikz-layout
+planning/               Project management & planning
+├── to-issues
+├── to-prd
+├── triage
+├── grill-me
+└── grill-with-docs
+meta/                   Skill & agent management
+├── caveman
+├── find-skills
+├── write-a-skill
+├── setup-matt-pocock-skills
+└── stepwise-explanations
 ```
 
 ## Skills
@@ -40,6 +41,12 @@ skills/
 | **econ-summary-stats** | Produce summary statistics tables with sample transparency and balance tests | Willie Song |
 | **beamer-presentation** | Design academic Beamer slides with conclusion-driven titles and one-point-per-slide | Willie Song |
 | **preliminary-data-audit** | Produce a first-pass dataset audit covering introduction, structure, coverage, units, variables, and basic dimensions | Willie Song |
+
+### latex/
+
+| Skill | Description | Creator / Source |
+|-------|-------------|------------------|
+| **verify-tikz-layout** | Compile, render, visually inspect, and iteratively repair TikZ diagrams in standalone files, papers, and Beamer; compilation alone never counts as visual verification | Willie Song |
 
 ### engineering/
 
@@ -72,7 +79,7 @@ skills/
 
 ## Attribution
 
-Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
+Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills, `verify-tikz-layout`, and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
 
 ## Usage
 
@@ -81,3 +88,11 @@ Clone into `~/.agents/skills/` and any compatible agent will auto-discover them.
 ```bash
 git clone https://github.com/Ningxi-Song/agent-skills.git ~/.agents/skills
 ```
+
+For a personal Codex installation, copy `latex/verify-tikz-layout` to:
+
+```text
+%USERPROFILE%\.codex\skills\verify-tikz-layout
+```
+
+The skill treats compilation and visual verification as separate states: it cannot award a visual pass until every required rendered figure, paper page, frame, and overlay has been opened and inspected.
