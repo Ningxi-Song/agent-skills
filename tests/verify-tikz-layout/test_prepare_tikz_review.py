@@ -38,6 +38,18 @@ class PageTests(unittest.TestCase):
 
 
 class CommandTests(unittest.TestCase):
+    def test_renderer_discovery_prefers_executable_before_wrapper(self):
+        paths = {
+            "pdftoppm": "C:/runtime/pdftoppm.cmd",
+            "pdftoppm.exe": "C:/texlive/pdftoppm.exe",
+        }
+
+        discovered = review.discover(
+            "auto", review.RENDERER_ORDER, paths.get
+        )
+
+        self.assertEqual(discovered, "C:/texlive/pdftoppm.exe")
+
     def test_pdflatex_command(self):
         command = review.build_compile_command(
             "C:/tex/pdflatex.exe", Path("paper.tex"), Path("out")

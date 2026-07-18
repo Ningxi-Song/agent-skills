@@ -14,7 +14,7 @@ ALLOWED_PREPARATION_STATUSES = {
     "VISUAL_VERIFICATION_UNAVAILABLE",
 }
 COMPILER_ORDER = ("latexmk", "tectonic", "pdflatex", "lualatex", "xelatex")
-RENDERER_ORDER = ("pdftoppm", "mutool")
+RENDERER_ORDER = ("pdftoppm.exe", "pdftoppm", "mutool.exe", "mutool")
 WARNING_PATTERNS = tuple(
     re.compile(pattern, re.IGNORECASE)
     for pattern in (
