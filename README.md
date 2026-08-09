@@ -10,6 +10,8 @@ economics/              Economics research & presentation
 ├── econ-summary-stats
 ├── beamer-presentation
 └── preliminary-data-audit
+documents/              Local document extraction and preparation
+└── markitdown-local
 engineering/            Software engineering practices
 ├── diagnose
 ├── tdd
@@ -32,6 +34,12 @@ meta/                   Skill & agent management
 ```
 
 ## Skills
+
+### documents/
+
+| Skill | Description | Creator / Source |
+|-------|-------------|------------------|
+| **markitdown-local** | Convert documents locally with Microsoft MarkItDown, then inspect only the sections needed for AI analysis | Willie Song; runtime: [microsoft/markitdown](https://github.com/microsoft/markitdown) |
 
 ### economics/
 
@@ -79,7 +87,7 @@ meta/                   Skill & agent management
 
 ## Attribution
 
-Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills, `verify-tikz-layout`, and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
+Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills, `markitdown-local`, `verify-tikz-layout`, and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
 
 ## Usage
 
@@ -96,3 +104,11 @@ For a personal Codex installation, copy `latex/verify-tikz-layout` to:
 ```
 
 The skill treats compilation and visual verification as separate states: it cannot award a visual pass until every required rendered figure, paper page, frame, and overlay has been opened and inspected.
+
+To install the local document-conversion skill, copy `documents/markitdown-local` to:
+
+```text
+%USERPROFILE%\.codex\skills\markitdown-local
+```
+
+Create an isolated Python environment inside that directory and install the required `markitdown` format extras. The skill keeps conversion local by default, disables plugins, and requires explicit authorization before external OCR, vision, transcription, or cloud services.
