@@ -1,4 +1,0 @@
-interface:
-  display_name: "MarkItDown Local"
-  short_description: "Convert documents locally before selective AI analysis"
-  default_prompt: "Use $markitdown-local to extract this document locally and inspect only the sections needed for my request."
