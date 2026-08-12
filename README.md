@@ -38,46 +38,46 @@ meta/                   Skill & agent management
 
 | Skill | Description | Creator / Source |
 |-------|-------------|------------------|
-| **econ-regression-table** | Format regression tables to economics journal standards | Willie Song |
-| **econ-summary-stats** | Produce summary statistics tables with sample transparency and balance tests | Willie Song |
-| **beamer-presentation** | Design academic Beamer slides with conclusion-driven titles and one-point-per-slide | Willie Song |
-| **preliminary-data-audit** | Produce a first-pass dataset audit covering introduction, structure, coverage, units, variables, and basic dimensions | Willie Song |
+| [**econ-regression-table**](economics/econ-regression-table/SKILL.md) | Format regression tables to economics journal standards | Willie Song |
+| [**econ-summary-stats**](economics/econ-summary-stats/SKILL.md) | Produce summary statistics tables with sample transparency and balance tests | Willie Song |
+| [**beamer-presentation**](economics/beamer-presentation/SKILL.md) | Design academic Beamer slides with conclusion-driven titles and one-point-per-slide | Willie Song |
+| [**preliminary-data-audit**](economics/preliminary-data-audit/SKILL.md) | Produce a first-pass dataset audit covering introduction, structure, coverage, units, variables, and basic dimensions | Willie Song |
 
 ### latex/
 
 | Skill | Description | Creator / Source |
 |-------|-------------|------------------|
-| **verify-tikz-layout** | Compile, render, visually inspect, and iteratively repair TikZ diagrams in standalone files, papers, and Beamer; compilation alone never counts as visual verification | Willie Song |
+| [**verify-tikz-layout**](latex/verify-tikz-layout/SKILL.md) | Compile, render, visually inspect, and iteratively repair TikZ diagrams in standalone files, papers, and Beamer; compilation alone never counts as visual verification | Willie Song |
 
 ### engineering/
 
 | Skill | Description | Creator / Source |
 |-------|-------------|------------------|
-| **diagnose** | Disciplined diagnosis loop for hard bugs and performance regressions | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **tdd** | Test-driven development with red-green-refactor loop | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **improve-codebase-architecture** | Find deepening opportunities in a codebase | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **project-hygiene** | Keep mixed Git changes, duplicate files, and temporary outputs under control with risk-based audits | Willie Song |
-| **zoom-out** | Zoom out for broader context / higher-level perspective | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**diagnose**](engineering/diagnose/SKILL.md) | Disciplined diagnosis loop for hard bugs and performance regressions | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**tdd**](engineering/tdd/SKILL.md) | Test-driven development with red-green-refactor loop | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**improve-codebase-architecture**](engineering/improve-codebase-architecture/SKILL.md) | Find deepening opportunities in a codebase | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**project-hygiene**](engineering/project-hygiene/SKILL.md) | Keep mixed Git changes, duplicate files, and temporary outputs under control with risk-based audits | Willie Song |
+| [**zoom-out**](engineering/zoom-out/SKILL.md) | Zoom out for broader context / higher-level perspective | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 
 ### planning/
 
 | Skill | Description | Creator / Source |
 |-------|-------------|------------------|
-| **to-issues** | Break a plan/spec/PRD into independently-grabbable issues | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **to-prd** | Turn conversation context into a PRD | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **triage** | Triage issues through a state machine | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **grill-me** | Interview the user relentlessly about a plan or design | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **grill-with-docs** | Grilling session that challenges your plan against existing domain model | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**to-issues**](planning/to-issues/SKILL.md) | Break a plan/spec/PRD into independently-grabbable issues | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**to-prd**](planning/to-prd/SKILL.md) | Turn conversation context into a PRD | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**triage**](planning/triage/SKILL.md) | Triage issues through a state machine | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**grill-me**](planning/grill-me/SKILL.md) | Interview the user relentlessly about a plan or design | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**grill-with-docs**](planning/grill-with-docs/SKILL.md) | Grilling session that challenges your plan against existing domain model | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 
 ### meta/
 
 | Skill | Description | Creator / Source |
 |-------|-------------|------------------|
-| **caveman** | Ultra-compressed communication mode. Cuts token usage ~75% | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **find-skills** | Helps users discover and install agent skills | Vercel Labs, imported from [vercel-labs/skills](https://github.com/vercel-labs/skills) |
-| **write-a-skill** | Create new agent skills with proper structure | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **setup-matt-pocock-skills** | Sets up Agent skills block in AGENTS.md/CLAUDE.md | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
-| **stepwise-explanations** | Break long answers into small readable chunks with pause points | Willie Song |
+| [**caveman**](meta/caveman/SKILL.md) | Ultra-compressed communication mode. Cuts token usage ~75% | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**find-skills**](meta/find-skills/SKILL.md) | Helps users discover and install agent skills | Vercel Labs, imported from [vercel-labs/skills](https://github.com/vercel-labs/skills) |
+| [**write-a-skill**](meta/write-a-skill/SKILL.md) | Create new agent skills with proper structure | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**setup-matt-pocock-skills**](meta/setup-matt-pocock-skills/SKILL.md) | Sets up Agent skills block in AGENTS.md/CLAUDE.md | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| [**stepwise-explanations**](meta/stepwise-explanations/SKILL.md) | Break long answers into small readable chunks with pause points | Willie Song |
 
 ## Attribution
 
