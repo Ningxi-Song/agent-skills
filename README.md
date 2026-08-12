@@ -14,6 +14,7 @@ engineering/            Software engineering practices
 ├── diagnose
 ├── tdd
 ├── improve-codebase-architecture
+├── project-hygiene
 └── zoom-out
 latex/                  LaTeX visual verification
 └── verify-tikz-layout
@@ -55,6 +56,7 @@ meta/                   Skill & agent management
 | **diagnose** | Disciplined diagnosis loop for hard bugs and performance regressions | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 | **tdd** | Test-driven development with red-green-refactor loop | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 | **improve-codebase-architecture** | Find deepening opportunities in a codebase | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
+| **project-hygiene** | Keep mixed Git changes, duplicate files, and temporary outputs under control with risk-based audits | Willie Song |
 | **zoom-out** | Zoom out for broader context / higher-level perspective | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 
 ### planning/
