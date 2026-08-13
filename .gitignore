@@ -1,6 +1,5 @@
 .DS_Store
 Thumbs.db
 *.log
-tests/verify-tikz-layout/.artifacts/
 __pycache__/
 *.pyc

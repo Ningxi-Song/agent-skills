@@ -2,13 +2,16 @@
 
 A collection of reusable agent skills for AI-powered coding assistants (opencode, Claude Code, Codex, etc.).
 
+> **Library split:** Beamer-related skills (`beamer-presentation`, `verify-tikz-layout`)
+> were extracted into a separate standalone library, [`beamer-skills`](../beamer-skills).
+> This repository now focuses on economics, engineering, planning, and meta skills.
+
 ## Structure
 
 ```
-economics/              Economics research & presentation
+economics/              Economics research
 ├── econ-regression-table
 ├── econ-summary-stats
-├── beamer-presentation
 └── preliminary-data-audit
 engineering/            Software engineering practices
 ├── diagnose
@@ -16,8 +19,6 @@ engineering/            Software engineering practices
 ├── improve-codebase-architecture
 ├── project-hygiene
 └── zoom-out
-latex/                  LaTeX visual verification
-└── verify-tikz-layout
 planning/               Project management & planning
 ├── to-issues
 ├── to-prd
@@ -40,14 +41,7 @@ meta/                   Skill & agent management
 |-------|-------------|------------------|
 | [**econ-regression-table**](economics/econ-regression-table/SKILL.md) | Format regression tables to economics journal standards | Willie Song |
 | [**econ-summary-stats**](economics/econ-summary-stats/SKILL.md) | Produce summary statistics tables with sample transparency and balance tests | Willie Song |
-| [**beamer-presentation**](economics/beamer-presentation/SKILL.md) | Design academic Beamer slides with conclusion-driven titles and one-point-per-slide | Willie Song |
 | [**preliminary-data-audit**](economics/preliminary-data-audit/SKILL.md) | Produce a first-pass dataset audit covering introduction, structure, coverage, units, variables, and basic dimensions | Willie Song |
-
-### latex/
-
-| Skill | Description | Creator / Source |
-|-------|-------------|------------------|
-| [**verify-tikz-layout**](latex/verify-tikz-layout/SKILL.md) | Compile, render, visually inspect, and iteratively repair TikZ diagrams in standalone files, papers, and Beamer; compilation alone never counts as visual verification | Willie Song |
 
 ### engineering/
 
@@ -81,7 +75,9 @@ meta/                   Skill & agent management
 
 ## Attribution
 
-Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills, `verify-tikz-layout`, and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
+Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
+
+> Note: `verify-tikz-layout` now lives in the separate `beamer-skills` library.
 
 ## Usage
 
@@ -91,10 +87,5 @@ Clone into `~/.agents/skills/` and any compatible agent will auto-discover them.
 git clone https://github.com/Ningxi-Song/agent-skills.git ~/.agents/skills
 ```
 
-For a personal Codex installation, copy `latex/verify-tikz-layout` to:
-
-```text
-%USERPROFILE%\.codex\skills\verify-tikz-layout
-```
-
-The skill treats compilation and visual verification as separate states: it cannot award a visual pass until every required rendered figure, paper page, frame, and overlay has been opened and inspected.
+For the Beamer skills (`beamer-presentation`, `verify-tikz-layout`), see the separate
+[`beamer-skills`](../beamer-skills) library.
