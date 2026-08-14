@@ -1,7 +1,7 @@
 {
   "version": 2,
   "mode": "article",
-  "template": "clean",
+  "template": "bamboo",
   "slides": [
     {"type":"title","title":"The AI Lemons Problem","subtitle":"How AI adoption can unravel prediction markets"},
     {"type":"claim","frametitle":"AI can improve prediction while undermining market viability","claim":"Higher AI penetration widens spreads and drives out uninformed traders.","evidence":["The informed share of order flow rises with AI adoption","Uninformed participation is endogenous to the spread"],"takeaway":"The market can collapse even as conditional prediction improves."},
