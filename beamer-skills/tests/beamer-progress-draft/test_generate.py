@@ -29,6 +29,29 @@ class ProgressGeneratorTests(unittest.TestCase):
         self.assertIn(r"\begin{frame}{Data is ready}", output)
         self.assertIn(r"\item Cleaned data", output)
 
+    def test_builds_structured_article_frames(self):
+        data = {
+            "mode": "article",
+            "slides": [
+                {"type": "claim", "frametitle": "The claim", "claim": "AI changes participation.", "evidence": ["Spreads rise"], "takeaway": "Market viability matters.", "speakerNotes": "Explain the mechanism."},
+                {"type": "equation", "frametitle": "The fixed point", "equation": "s = Phi(s; alpha)", "definitions": ["s is the spread"], "meaning": "Exit feeds back into pricing."},
+                {"type": "theorem", "frametitle": "Collapse threshold", "statement": "If alpha exceeds the threshold, no active equilibrium exists.", "intuition": "The minimum spread exceeds participation value."},
+                {"type": "takeaway", "frametitle": "Bottom line", "takeaway": "Efficiency can undermine survival."},
+            ],
+        }
+        output = MODULE.build(data, str(ROOT / "beamer-progress-draft" / "templates"))
+        self.assertIn("AI changes participation.", output)
+        self.assertIn("s = Phi(s; alpha)", output)
+        self.assertIn("Collapse threshold", output)
+        self.assertIn("Efficiency can undermine survival.", output)
+
+    def test_article_quality_warning_flags_bullet_only_deck(self):
+        data = {"mode": "article", "slides": [{"type": "itemize", "frametitle": "Only bullets", "items": ["One"]}]}
+        stream = io.StringIO()
+        with redirect_stdout(stream):
+            MODULE.build(data, str(ROOT / "beamer-progress-draft" / "templates"))
+        self.assertIn("article deck", stream.getvalue())
+
     def test_escapes_latex_special_characters(self):
         self.assertEqual(MODULE.latex_escape("A&B_50%"), r"A\&B\_50\%")
 

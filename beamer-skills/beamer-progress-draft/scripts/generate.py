@@ -77,6 +77,56 @@ def items_list(items):
     return "\n".join(lines)
 
 
+def notes_comment(slide):
+    notes = slide.get("speakerNotes", "")
+    return "% Speaker notes: " + latex_escape(notes) if notes else ""
+
+
+def article_quality_warnings(data):
+    if data.get("mode") != "article":
+        return
+    slides = data.get("slides", [])
+    types = {slide.get("type") for slide in slides}
+    if "claim" not in types:
+        _warn("article deck needs a claim slide")
+    if not ({"figure", "equation"} & types):
+        _warn("article deck needs a figure or equation")
+    if not ({"theorem", "takeaway"} & types):
+        _warn("article deck needs a formal result or takeaway")
+    if sum(slide.get("type") == "itemize" for slide in slides) > len(slides) / 2:
+        _warn("article deck is mostly bullet-only; consider structured slide types")
+
+
+def article_frame(slide, index):
+    title = latex_escape(slide.get("frametitle", ""))
+    slide_type = slide.get("type")
+    if slide_type == "claim":
+        body = [r"\textbf{%s}" % latex_escape(slide.get("claim", "")), items_list(slide.get("evidence", []))]
+        if slide.get("takeaway"):
+            body.append(r"\begin{block}{Takeaway}" + latex_escape(slide["takeaway"]) + r"\end{block}")
+    elif slide_type == "equation":
+        body = [r"\begin{equation*}" + latex_escape(slide.get("equation", "")) + r"\end{equation*}", items_list(slide.get("definitions", []))]
+        if slide.get("meaning"):
+            body.append(r"\textit{%s}" % latex_escape(slide["meaning"]))
+    elif slide_type == "theorem":
+        body = [r"\begin{block}{Result}" + latex_escape(slide.get("statement", "")) + r"\end{block}"]
+        if slide.get("intuition"):
+            body.append(r"\textit{Intuition:} " + latex_escape(slide["intuition"]))
+    elif slide_type == "takeaway":
+        body = [r"\begin{block}{Takeaway}" + latex_escape(slide.get("takeaway", "")) + r"\end{block}"]
+    elif slide_type == "figure":
+        body = [r"\begin{figure}\centering\includegraphics[width=0.86\textwidth]{%s}" % latex_escape(slide.get("src", ""))]
+        if slide.get("caption"):
+            body.append(r"\caption{%s}" % latex_escape(slide["caption"]))
+        body.append(r"\end{figure}")
+        if slide.get("takeaway"):
+            body.append(r"\textit{%s}" % latex_escape(slide["takeaway"]))
+    else:
+        return ""
+    notes = notes_comment(slide)
+    return r"\begin{frame}{%s}" % title + "\n" + "\n".join(body) + ("\n" + notes if notes else "") + "\n" + r"\end{frame}"
+
+
 def slide_to_frame(slide, index):
     slide_type = slide.get("type")
     if slide_type == "title":
@@ -88,12 +138,16 @@ def slide_to_frame(slide, index):
             _warn("slide %d has more than five bullets" % index)
         title = latex_escape(slide.get("frametitle", ""))
         return r"\begin{frame}{%s}" % title + "\n" + items_list(items) + "\n" + r"\end{frame}"
+    if slide_type in {"claim", "figure", "equation", "theorem", "takeaway"}:
+        _title_warnings(slide, index)
+        return article_frame(slide, index)
     _warn("unknown slide type '%s' on slide %d" % (slide_type, index))
     return ""
 
 
 def build(data, template_dir):
     validate_data(data)
+    article_quality_warnings(data)
     template_key = data.get("template", "clean")
     template_path = os.path.join(template_dir, template_key + ".tex")
     if not os.path.exists(template_path):
