@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "template": "clean",
+  "slides": [
+    {
+      "type": "title",
+      "title": "Project progress",
+      "subtitle": "Research notes"
+    },
+    {
+      "type": "itemize",
+      "frametitle": "Data preparation is complete",
+      "items": [
+        "Merged the source files",
+        "Resolved duplicate observations",
+        "Next: estimate the baseline model"
+      ]
+    }
+  ]
+}

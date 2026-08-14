@@ -1,0 +1,91 @@
+\documentclass[10pt]{mycool}
+\providecommand{\vsmall}{\small}
+
+\title[]{Beamer Skills Library}
+\subtitle[]{From research notes to presentation-ready slides}
+\author[]{Codex}
+\institute[]{Beamer Skills Project}
+\date[]{}
+
+\graphicspath{{C:/Users/HKUBS/Dropbox/working_proj/beamer_temp/bamboo/fig/}}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Slide production follows a staged workflow}
+\begin{itemize}
+  \item Draft project progress as editable slides
+  \item Convert structured content into Beamer source
+  \item Apply academic presentation rules before delivery
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Three skills cover authoring}
+\begin{itemize}
+  \item \texttt{beamer-format}: content and layout standards
+  \item \texttt{beamer-live-draft}: interactive HTML drafting and transpilation
+  \item \texttt{verify-tikz-layout}: rendered evidence and visual inspection
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Progress drafts stay simple and convertible}
+\begin{itemize}
+  \item One HTML slide maps to one future Beamer frame
+  \item Title slides and title-plus-bullets slides are supported
+  \item JSON provides a stable handoff between editing and generation
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Generator preserves content, flags risks}
+\begin{itemize}
+  \item Escapes LaTeX special characters automatically
+  \item Warns about empty titles and more than five bullets
+  \item Supports clean, metropolis, and rochester templates
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Academic rules keep decks readable}
+\begin{itemize}
+  \item One point per slide with conclusion-driven titles
+  \item Readable fonts, balanced whitespace, and minimal tables
+  \item Main results first; full details move to the appendix
+\end{itemize}
+\end{frame}
+
+\begin{frame}{TikZ verification is a separate visual gate}
+\begin{itemize}
+  \item Compile and render the relevant pages or overlays
+  \item Inspect every required image for overlap and clipping
+  \item Repair layout without changing analytical meaning
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Image layouts can be tested inside the final template}
+\begin{columns}[T,onlytextwidth]
+  \column{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{bamboo.png}
+  \\[-0.2em]
+  {\scriptsize Template asset}
+  \column{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{cr_website.png}
+  \\[-0.2em]
+  {\scriptsize Image asset}
+  \column{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{ipo23_25.pdf}
+  \\[-0.2em]
+  {\scriptsize PDF figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Notes become a reproducible PDF workflow}
+\begin{itemize}
+  \item Edit \texttt{progress-draft.html} and export \texttt{progress.json}
+  \item Run \texttt{generate.py} to produce \texttt{slides.tex} and optionally \texttt{slides.pdf}
+  \item Review the final deck with publication and visual checks
+\end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "template": "clean",
+  "slides": [
+    {
+      "type": "title",
+      "title": "Beamer Skills Library",
+      "subtitle": "From research notes to presentation-ready slides"
+    },
+    {
+      "type": "itemize",
+      "frametitle": "Slide production follows a staged workflow",
+      "items": [
+        "Draft project progress as editable slides",
+        "Convert structured content into Beamer source",
+        "Apply academic presentation rules before delivery"
+      ]
+    },
+    {
+      "type": "itemize",
+      "frametitle": "Three skills cover the authoring workflow",
+      "items": [
+        "beamer-format: content and layout standards",
+        "beamer-live-draft: interactive HTML drafting and transpilation",
+        "verify-tikz-layout: rendered evidence and visual inspection"
+      ]
+    },
+    {
+      "type": "itemize",
+      "frametitle": "Progress drafts stay simple and convertible",
+      "items": [
+        "One HTML slide maps to one future Beamer frame",
+        "Title slides and title-plus-bullets slides are supported",
+        "JSON provides a stable handoff between editing and generation"
+      ]
+    },
+    {
+      "type": "itemize",
+      "frametitle": "The generator preserves content and flags risks",
+      "items": [
+        "Escapes LaTeX special characters automatically",
+        "Warns about empty titles and more than five bullets",
+        "Supports clean, metropolis, and rochester templates"
+      ]
+    },
+    {
+      "type": "itemize",
+      "frametitle": "Academic rules keep the deck audience-friendly",
+      "items": [
+        "One point per slide with conclusion-driven titles",
+        "Readable fonts, balanced whitespace, and minimal tables",
+        "Main results first; full details move to the appendix"
+      ]
+    },
+    {
+      "type": "itemize",
+      "frametitle": "TikZ verification is a separate visual gate",
+      "items": [
+        "Compile and render the relevant pages or overlays",
+        "Inspect every required image for overlap and clipping",
+        "Repair layout without changing analytical meaning"
+      ]
+    },
+    {
+      "type": "itemize",
+      "frametitle": "Notes become a reproducible PDF workflow",
+      "items": [
+        "Edit progress-draft.html and export progress.json",
+        "Run generate.py to produce slides.tex and optionally slides.pdf",
+        "Review the final deck with the publication and visual checks"
+      ]
+    }
+  ]
+}

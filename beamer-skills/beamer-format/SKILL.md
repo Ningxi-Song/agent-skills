@@ -1,5 +1,5 @@
 ---
-name: beamer-presentation
+name: beamer-format
 description: >
   Design academic presentation slides (Beamer) for economics research.
   Use when user wants to create presentation slides, seminar slides,
@@ -8,7 +8,7 @@ description: >
   minimal tables, large fonts, and conclusion-driven titles.
 ---
 
-# Beamer Presentation
+# Beamer Format
 
 Produce academic presentation slides that meet economics seminar standards.
 See [EXAMPLES.md](EXAMPLES.md) for a complete deck outline.
@@ -37,6 +37,12 @@ These rules override everything else. Violate none of them.
 
 6. **WHITESPACE 35–40%.** Content fills 60–65% of the slide. Never exceed 75%.
    Whitespace is distributed evenly on all sides.
+
+7. **DISTRIBUTE BULLETS EVENLY.** Leave visible space between adjacent bullets
+   whenever the slide has room. Spread the bullet group vertically across the
+   usable body area so no bullets are cramped together and no large unused gap
+   appears below or between them. Use consistent `\itemsep` and balanced
+   vertical spacing rather than a dense default `itemize` layout.
 
 ---
 
@@ -165,6 +171,8 @@ Content must breathe. Whitespace is not wasted space -- it guides attention.
   that follow.
 - Itemize environments: use `\setlength{\itemsep}{4pt}` or similar -- never
   the default tight item spacing, never stretched to fill the page.
+- Distribute bullets as evenly as practical within the usable body area;
+  avoid clustering them at the top when the slide has room.
 
 **What to avoid:**
 - `\vfill` between every element -- creates uneven, floating gaps.

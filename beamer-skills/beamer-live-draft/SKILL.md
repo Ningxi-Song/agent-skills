@@ -21,7 +21,7 @@ A skill that turns Beamer authoring into a two-step loop:
    binds it to a Beamer template and generates a final `.tex` / `.pdf`.
 
 It is a *visual scratchpad and translator*, not a replacement for
-[beamer-presentation](../beamer-presentation/SKILL.md) — that skill owns the
+[beamer-format](../beamer-format/SKILL.md) — that skill owns the
 content/design rules; this one owns the editable preview → source pipeline.
 
 ---
@@ -107,7 +107,7 @@ draft.json 生成", read that file directly instead of asking them to paste.
    [--compile]`. If `--compile` is requested but no LaTeX engine exists, report
    the `.tex` path and the compile command.
 5. **Deliver.** `present_files` the `.tex` (or `.pdf`). Optionally open
-   [beamer-presentation](../beamer-presentation/SKILL.md) rules to sanity-check
+   [beamer-format](../beamer-format/SKILL.md) rules to sanity-check
    formatting (single-line frame titles, 3–5 bullets, no empty bottom).
 
 ### Tips for the agent
