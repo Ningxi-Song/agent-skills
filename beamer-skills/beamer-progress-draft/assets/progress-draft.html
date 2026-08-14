@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beamer Progress Draft</title>
+<style>
+:root{--navy:#0b3d91;--blue:#1453c4;--ink:#1d2433;--muted:#667085;--paper:#f3f5f8;--line:#d8dee8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+header{height:54px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:8px 12px;flex-wrap:wrap}header h1{font-size:16px;color:var(--navy);margin:0 16px 0 0}button,select,.file-button{border:1px solid #b8c1cf;border-radius:6px;background:#fff;padding:6px 10px;cursor:pointer;font:inherit}.add{background:#eef3ff;border-color:#bfd0f7}.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.spacer{flex:1}
+.main{height:calc(100vh - 54px);display:flex}.side{width:220px;min-width:220px;background:#fff;border-right:1px solid var(--line);padding:10px;overflow:auto}.slideitem{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:7px;margin-bottom:7px;background:#fafbfc;cursor:pointer}.slideitem.active{border-color:var(--navy);background:#edf3ff}.num{width:18px;color:var(--muted);font-size:12px}.label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}.tiny{padding:2px 5px;font-size:11px}
+.stagewrap{flex:1;overflow:auto;padding:22px;display:flex;justify-content:center;align-items:flex-start}.viewport{transform-origin:top center}.slide{width:1024px;height:576px;background:#fff;box-shadow:0 5px 24px #1d243322;position:relative;overflow:hidden}.topbar{height:14px;background:linear-gradient(90deg,var(--navy),var(--blue))}.framehead{height:72px;background:var(--navy);color:#fff;padding:19px 32px;font-size:27px;font-weight:650}.body{position:absolute;left:0;right:0;top:86px;bottom:0;padding:30px 44px}.title-main{position:absolute;left:35px;right:35px;top:160px;text-align:center}.title-main .t{font-size:43px;font-weight:750;color:var(--navy)}.title-main .s{font-size:23px;color:var(--muted);margin-top:16px}.beamer{list-style:none;padding:0;margin:0}.beamer li{position:relative;padding-left:28px;margin:17px 0;font-size:25px;line-height:1.25}.beamer li:before{content:"▸";position:absolute;left:0;color:var(--navy);font-weight:700}.editable:focus{outline:2px solid #ffd34d;border-radius:3px}.warning{position:fixed;left:220px;right:0;bottom:0;background:#fff6d8;border-top:1px solid #e4c45b;color:#765d00;padding:7px 14px;min-height:30px}.hidden{display:none}.file-button input{display:none}
+.image-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}.image-card{border:1px solid var(--line);border-radius:8px;background:#fbfcfe;overflow:hidden;box-shadow:0 2px 8px #1d243310}.image-card img{display:block;width:100%;height:220px;object-fit:cover;background:#eef3ff}.image-card .caption{padding:10px 12px;font-size:18px;font-weight:650;color:var(--navy);text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>Beamer Progress Draft</h1>
+  <button class="add" id="addTitle">+ Title slide</button>
+  <button class="add" id="addItem">+ Bullet slide</button>
+  <button id="deleteSlide">Delete</button>
+  <button id="moveUp">Move up</button>
+  <button id="moveDown">Move down</button>
+  <select id="theme" aria-label="Beamer template"><option value="clean">Clean (Madrid)</option><option value="metropolis">Metropolis</option><option value="rochester">Rochester</option></select>
+  <span class="spacer"></span>
+  <button class="primary" id="exportJson">Export JSON</button>
+  <label class="file-button">Import JSON<input id="importJson" type="file" accept="application/json"></label>
+</header>
+<div class="main"><aside class="side" id="side"></aside><main class="stagewrap" id="stagewrap"><div class="viewport" id="viewport"><section class="slide" id="slide"></section></div></main></div>
+<div class="warning" id="warning">Edit the slide directly. Export JSON when the draft is ready.</div>
+<script>
+(() => {
+  const librarySlides = [
+    {type:"title",title:"Beamer Skills Library",subtitle:"From research notes to presentation-ready slides"},
+    {type:"itemize",frametitle:"Slide production follows a staged workflow",items:["Draft project progress as editable slides","Convert structured content into Beamer source","Apply academic presentation rules before delivery"]},
+    {type:"itemize",frametitle:"Three skills cover the authoring workflow",items:["beamer-format: content and layout standards","beamer-live-draft: interactive HTML drafting and transpilation","verify-tikz-layout: rendered evidence and visual inspection"]},
+    {type:"itemize",frametitle:"Progress drafts stay simple and convertible",items:["One HTML slide maps to one future Beamer frame","Title slides and title-plus-bullets slides are supported","JSON provides a stable handoff between editing and generation"]},
+    {type:"itemize",frametitle:"The generator preserves content and flags risks",items:["Escapes LaTeX special characters automatically","Warns about empty titles and more than five bullets","Supports clean, metropolis, and rochester templates"]},
+    {type:"itemize",frametitle:"Academic rules keep the deck audience-friendly",items:["One point per slide with conclusion-driven titles","Readable fonts, balanced whitespace, and minimal tables","Main results first; full details move to the appendix"]},
+    {type:"itemize",frametitle:"TikZ verification is a separate visual gate",items:["Compile and render the relevant pages or overlays","Inspect every required image for overlap and clipping","Repair layout without changing analytical meaning"]},
+    {type:"itemize",frametitle:"Notes become a reproducible PDF workflow",items:["Edit progress-draft.html and export progress.json","Run generate.py to produce slides.tex and optionally slides.pdf","Review the final deck with the publication and visual checks"]},
+    {type:"image_grid",frametitle:"Image layout remains readable beside slide text",images:[
+      {label:"HTML draft",src:"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 400'%3E%3Crect width='640' height='400' fill='%23eef3ff'/%3E%3Crect x='36' y='34' width='568' height='62' rx='10' fill='%230b3d91'/%3E%3Crect x='72' y='142' width='496' height='28' rx='14' fill='%239ab5ee'/%3E%3Crect x='72' y='202' width='430' height='28' rx='14' fill='%23c3d4f5'/%3E%3Crect x='72' y='262' width='360' height='28' rx='14' fill='%23d9e4fa'/%3E%3Ctext x='320' y='365' text-anchor='middle' font-family='Arial' font-size='28' fill='%230b3d91'%3EEditable draft%3C/text%3E%3C/svg%3E"},
+      {label:"JSON contract",src:"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 400'%3E%3Crect width='640' height='400' fill='%23f4f8f4'/%3E%3Crect x='54' y='44' width='532' height='312' rx='12' fill='%232d6a4f'/%3E%3Ctext x='94' y='112' font-family='monospace' font-size='27' fill='white'%3E%7B%22slides%22:%20%5B%3C/text%3E%3Ctext x='94' y='166' font-family='monospace' font-size='27' fill='%23b7e4c7'%3E%7B%22type%22:%20%22itemize%22%7D%3C/text%3E%3Ctext x='94' y='220' font-family='monospace' font-size='27' fill='%23b7e4c7'%3E%7B%22items%22:%20%5B...%5D%7D%3C/text%3E%3Ctext x='94' y='274' font-family='monospace' font-size='27' fill='white'%3E%5D%7D%3C/text%3E%3Ctext x='320' y='365' text-anchor='middle' font-family='Arial' font-size='28' fill='%232d6a4f'%3EStructured handoff%3C/text%3E%3C/svg%3E"},
+      {label:"Beamer output",src:"data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 400'%3E%3Crect width='640' height='400' fill='%23fff8e7'/%3E%3Crect x='48' y='42' width='544' height='254' rx='12' fill='white' stroke='%23d79b00' stroke-width='8'/%3E%3Crect x='48' y='42' width='544' height='64' rx='12' fill='%23d79b00'/%3E%3Ccircle cx='104' cy='74' r='13' fill='white'/%3E%3Crect x='86' y='150' width='360' height='22' rx='11' fill='%23e7c56a'/%3E%3Crect x='86' y='198' width='430' height='22' rx='11' fill='%23f1dfaa'/%3E%3Ctext x='320' y='365' text-anchor='middle' font-family='Arial' font-size='28' fill='%23a56d00'%3EFinal presentation%3C/text%3E%3C/svg%3E"}
+    ]}
+  ];
+  const starterSlides = [{type:"title",title:"Project progress",subtitle:"Research notes"},{type:"itemize",frametitle:"The next step is clear",items:["Record what has been completed","Write the current research question","List the next concrete action"]}];
+  const state = {version:1, template:"clean", slides:new URLSearchParams(location.search).has("library") ? librarySlides : starterSlides};
+  let selected = 0;
+  const $ = id => document.getElementById(id);
+  const esc = value => String(value ?? "").replace(/[&<>\"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+  function renderNav(){
+    $("side").innerHTML = state.slides.map((s,i) => `<div class="slideitem ${i===selected?"active":""}" data-index="${i}"><span class="num">${i+1}</span><span class="label">${esc(s.type === "title" ? s.title || "Title slide" : s.frametitle || "Bullet slide")}</span></div>`).join("");
+    document.querySelectorAll(".slideitem").forEach(el => el.onclick = () => {selected=Number(el.dataset.index);render();});
+  }
+  function render(){
+    const s = state.slides[selected];
+    $("theme").value = state.template;
+    if(!s){$("slide").innerHTML="";renderNav();return;}
+    if(s.type === "title") $("slide").innerHTML = `<div class="topbar"></div><div class="title-main"><div class="t editable" contenteditable="true" data-field="title">${esc(s.title)}</div><div class="s editable" contenteditable="true" data-field="subtitle">${esc(s.subtitle)}</div></div>`;
+    else if(s.type === "image_grid") $("slide").innerHTML = `<div class="topbar"></div><div class="framehead editable" contenteditable="true" data-field="frametitle">${esc(s.frametitle)}</div><div class="body"><div class="image-grid">${s.images.map(image => `<div class="image-card"><img src="${image.src}" alt="${esc(image.label)}"><div class="caption">${esc(image.label)}</div></div>`).join("")}</div></div>`;
+    else $("slide").innerHTML = `<div class="topbar"></div><div class="framehead editable" contenteditable="true" data-field="frametitle">${esc(s.frametitle)}</div><div class="body"><ul class="beamer">${(s.items||[]).map((item,i)=>`<li><span class="editable" contenteditable="true" data-item="${i}">${esc(item)}</span> <button class="tiny" data-remove="${i}" title="Remove bullet">×</button></li>`).join("")}</ul><button class="add" id="addBullet">+ Bullet</button></div>`;
+    document.querySelectorAll("[contenteditable]").forEach(el => el.oninput = () => {if(el.dataset.item !== undefined) state.slides[selected].items[Number(el.dataset.item)] = el.innerText; else state.slides[selected][el.dataset.field] = el.innerText;renderNav();updateWarning();});
+    document.querySelectorAll("[data-remove]").forEach(el => el.onclick = () => {s.items.splice(Number(el.dataset.remove),1);render();});
+    const addBullet = $("addBullet"); if(addBullet) addBullet.onclick = () => {s.items.push("New point");render();};
+    renderNav();updateWarning();fit();
+  }
+  function updateWarning(){const s=state.slides[selected];const messages=[];if(s.type === "itemize" && !s.frametitle.trim()) messages.push("This slide has an empty title.");if(s.type === "itemize" && s.items.length>5) messages.push("This slide has more than five bullets.");$("warning").textContent=messages.length?messages.join(" "):"Edit the slide directly. Export JSON when the draft is ready.";}
+  function add(type){state.slides.push(type === "title" ? {type,title:"New project",subtitle:""} : {type:"itemize",frametitle:"New progress point",items:["New point"]});selected=state.slides.length-1;render();}
+  $("addTitle").onclick=()=>add("title");$("addItem").onclick=()=>add("itemize");
+  $("deleteSlide").onclick=()=>{if(state.slides.length>1){state.slides.splice(selected,1);selected=Math.max(0,selected-1);render();}};
+  function move(delta){const next=selected+delta;if(next<0||next>=state.slides.length)return;[state.slides[selected],state.slides[next]]=[state.slides[next],state.slides[selected]];selected=next;render();}
+  $("moveUp").onclick=()=>move(-1);$("moveDown").onclick=()=>move(1);$("theme").onchange=e=>state.template=e.target.value;
+  $("exportJson").onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="progress.json";a.click();URL.revokeObjectURL(a.href);};
+  $("importJson").onchange=e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{const incoming=JSON.parse(reader.result);if(!Array.isArray(incoming.slides))throw new Error("JSON must contain slides");state.version=incoming.version||1;state.template=incoming.template||"clean";state.slides=incoming.slides;selected=0;render();};reader.readAsText(file);};
+  function fit(){const scale=Math.min(1,(window.innerWidth-260)/1024,(window.innerHeight-90)/576);$("viewport").style.transform=`scale(${Math.max(.35,scale)})`;$("stagewrap").style.paddingBottom=`${576*Math.max(.35,scale)+30}px`;}
+  window.onresize=fit;render();
+})();
+</script>
+</body>
+</html>

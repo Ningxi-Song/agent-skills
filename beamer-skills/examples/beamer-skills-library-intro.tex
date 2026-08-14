@@ -1,0 +1,68 @@
+\documentclass[aspectratio=169,14pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{}
+\title{Beamer Skills Library}
+\subtitle{From research notes to presentation-ready slides}
+\begin{document}
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}{Slide production follows a staged workflow}
+\begin{itemize}
+  \item Draft project progress as editable slides
+  \item Convert structured content into Beamer source
+  \item Apply academic presentation rules before delivery
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Three skills cover the authoring workflow}
+\begin{itemize}
+  \item beamer-format: content and layout standards
+  \item beamer-live-draft: interactive HTML drafting and transpilation
+  \item verify-tikz-layout: rendered evidence and visual inspection
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Progress drafts stay simple and convertible}
+\begin{itemize}
+  \item One HTML slide maps to one future Beamer frame
+  \item Title slides and title-plus-bullets slides are supported
+  \item JSON provides a stable handoff between editing and generation
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The generator preserves content and flags risks}
+\begin{itemize}
+  \item Escapes LaTeX special characters automatically
+  \item Warns about empty titles and more than five bullets
+  \item Supports clean, metropolis, and rochester templates
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Academic rules keep the deck audience-friendly}
+\begin{itemize}
+  \item One point per slide with conclusion-driven titles
+  \item Readable fonts, balanced whitespace, and minimal tables
+  \item Main results first; full details move to the appendix
+\end{itemize}
+\end{frame}
+
+\begin{frame}{TikZ verification is a separate visual gate}
+\begin{itemize}
+  \item Compile and render the relevant pages or overlays
+  \item Inspect every required image for overlap and clipping
+  \item Repair layout without changing analytical meaning
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Notes become a reproducible PDF workflow}
+\begin{itemize}
+  \item Edit progress-draft.html and export progress.json
+  \item Run generate.py to produce slides.tex and optionally slides.pdf
+  \item Review the final deck with the publication and visual checks
+\end{itemize}
+\end{frame}
+\end{document}
