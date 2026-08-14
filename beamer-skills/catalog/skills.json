@@ -1,0 +1,30 @@
+[
+  {
+    "id": "beamer-format",
+    "path": "beamer-format",
+    "link": "beamer-skills/beamer-format/SKILL.md",
+    "description": "Design academic Beamer slides with a clean, minimal aesthetic",
+    "creator": "Willie Song"
+  },
+  {
+    "id": "verify-tikz-layout",
+    "path": "verify-tikz-layout",
+    "link": "beamer-skills/verify-tikz-layout/SKILL.md",
+    "description": "Compile, render, and visually verify TikZ layouts (including Beamer slides)",
+    "creator": "Willie Song"
+  },
+  {
+    "id": "beamer-live-draft",
+    "path": "beamer-live-draft",
+    "link": "beamer-skills/beamer-live-draft/SKILL.md",
+    "description": "Interactive Beamer-style HTML draft editor (right-panel) + JSON→tex/PDF transpiler",
+    "creator": "Willie Song"
+  },
+  {
+    "id": "beamer-progress-draft",
+    "path": "beamer-progress-draft",
+    "link": "beamer-skills/beamer-progress-draft/SKILL.md",
+    "description": "Draft project progress and research notes as editable Beamer-like slides",
+    "creator": "Willie Song"
+  }
+]
