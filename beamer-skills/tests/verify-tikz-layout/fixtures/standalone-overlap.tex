@@ -1,0 +1,8 @@
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners, minimum width=30mm, minimum height=10mm},
+  >=Latex
+]
+\node[box] (cause) at (0,0) {Weather shock};
+\node[box] (outcome) at (0.4,0) {Outcome response};
+\draw[->] (cause) -- node[above] {effect} (outcome);
+\end{tikzpicture}

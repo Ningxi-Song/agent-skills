@@ -2,13 +2,14 @@
 
 A collection of reusable agent skills for AI-powered coding assistants (opencode, Claude Code, Codex, etc.).
 
-> **Library split:** Beamer-related skills (`beamer-presentation`, `verify-tikz-layout`)
-> were extracted into a separate standalone library, [`beamer-skills`](../beamer-skills).
-> This repository now focuses on economics, engineering, planning, and meta skills.
-
 ## Structure
 
 ```
+beamer-skills/          Beamer & LaTeX/TikZ skills
+├── beamer-presentation
+├── verify-tikz-layout
+├── tests/verify-tikz-layout
+└── docs/superpowers
 economics/              Economics research
 ├── econ-regression-table
 ├── econ-summary-stats
@@ -34,6 +35,13 @@ meta/                   Skill & agent management
 ```
 
 ## Skills
+
+### beamer-skills/
+
+| Skill | Description | Creator / Source |
+|-------|-------------|------------------|
+| [**beamer-presentation**](beamer-skills/beamer-presentation/SKILL.md) | Design academic Beamer slides with a clean, minimal aesthetic | Willie Song |
+| [**verify-tikz-layout**](beamer-skills/verify-tikz-layout/SKILL.md) | Compile, render, and visually verify TikZ layouts (including Beamer slides) | Willie Song |
 
 ### economics/
 
@@ -75,9 +83,7 @@ meta/                   Skill & agent management
 
 ## Attribution
 
-Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
-
-> Note: `verify-tikz-layout` now lives in the separate `beamer-skills` library.
+Creator/source labels are based on this repository's commit history and the local skill installer lock file used to import upstream skills. The economics skills, beamer skills, and `stepwise-explanations` were authored in this repository by Willie Song. The Matt Pocock skills were imported and reorganized from `mattpocock/skills`. `find-skills` was imported from `vercel-labs/skills`.
 
 ## Usage
 
@@ -86,6 +92,3 @@ Clone into `~/.agents/skills/` and any compatible agent will auto-discover them.
 ```bash
 git clone https://github.com/Ningxi-Song/agent-skills.git ~/.agents/skills
 ```
-
-For the Beamer skills (`beamer-presentation`, `verify-tikz-layout`), see the separate
-[`beamer-skills`](../beamer-skills) library.

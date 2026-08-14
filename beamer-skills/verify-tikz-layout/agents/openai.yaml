@@ -1,0 +1,7 @@
+interface:
+  display_name: "Verify TikZ Layout"
+  short_description: "Render, inspect, and repair TikZ layouts"
+  default_prompt: "Use $verify-tikz-layout to compile, render, inspect, and repair this TikZ diagram."
+
+policy:
+  allow_implicit_invocation: true
