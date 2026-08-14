@@ -33,7 +33,7 @@ class ProgressGeneratorTests(unittest.TestCase):
         data = {
             "mode": "article",
             "slides": [
-                {"type": "claim", "frametitle": "The claim", "claim": "AI changes participation.", "evidence": ["Spreads rise"], "takeaway": "Market viability matters.", "speakerNotes": "Explain the mechanism."},
+                {"type": "claim", "frametitle": "The claim", "claim": "AI changes participation.", "evidence": ["Spreads rise"], "takeaway": "Market viability matters."},
                 {"type": "equation", "frametitle": "The fixed point", "equation": "s = Phi(s; alpha)", "definitions": ["s is the spread"], "meaning": "Exit feeds back into pricing."},
                 {"type": "theorem", "frametitle": "Collapse threshold", "statement": "If alpha exceeds the threshold, no active equilibrium exists.", "intuition": "The minimum spread exceeds participation value."},
                 {"type": "takeaway", "frametitle": "Bottom line", "takeaway": "Efficiency can undermine survival."},

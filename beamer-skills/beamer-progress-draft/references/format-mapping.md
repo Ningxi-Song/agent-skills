@@ -19,6 +19,6 @@ For article mode, map structured content instead of flattening it into bullets:
 | `figure` | mechanism, result, or conceptual diagram | centered figure with caption and interpretation |
 | `equation` | key model relationship | centered equation, variable definitions, economic meaning |
 | `theorem` | formal result | theorem statement plus intuition, proof details in appendix |
-| `takeaway` | transition or conclusion | one highlighted conclusion and optional speaker notes |
+| `takeaway` | transition or conclusion | one highlighted conclusion |
 
-`speakerNotes` are for the presenter and should not be rendered as body paragraphs. A valid article draft should contain at least one claim, one visual or equation, one formal result or takeaway, and one conclusion.
+A valid article draft should contain at least one claim, one visual or equation, one formal result or takeaway, and one conclusion.

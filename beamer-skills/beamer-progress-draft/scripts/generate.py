@@ -77,11 +77,6 @@ def items_list(items):
     return "\n".join(lines)
 
 
-def notes_comment(slide):
-    notes = slide.get("speakerNotes", "")
-    return "% Speaker notes: " + latex_escape(notes) if notes else ""
-
-
 def article_quality_warnings(data):
     if data.get("mode") != "article":
         return
@@ -123,8 +118,7 @@ def article_frame(slide, index):
             body.append(r"\textit{%s}" % latex_escape(slide["takeaway"]))
     else:
         return ""
-    notes = notes_comment(slide)
-    return r"\begin{frame}{%s}" % title + "\n" + "\n".join(body) + ("\n" + notes if notes else "") + "\n" + r"\end{frame}"
+    return r"\begin{frame}{%s}" % title + "\n" + "\n".join(body) + "\n" + r"\end{frame}"
 
 
 def slide_to_frame(slide, index):

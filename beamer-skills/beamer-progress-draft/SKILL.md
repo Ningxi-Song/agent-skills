@@ -9,11 +9,11 @@ Use this skill for a slide-oriented project notebook. It provides a self-contain
 
 ## Article mode
 
-Use `?article=1` or import an article JSON when turning a paper into a deck. Article mode is claim-driven rather than bullet-driven: each slide should have one audience-facing claim and may add a figure, equation, theorem, takeaway, and speaker notes.
+Use `?article=1` or import an article JSON when turning a paper into a deck. Article mode is claim-driven rather than bullet-driven: each slide should have one audience-facing claim and may add a figure, equation, theorem, or takeaway.
 
 Supported article slide types are `claim`, `figure`, `equation`, `theorem`, and `takeaway`, in addition to `title` and `itemize`. Build the narrative in this order when appropriate: motivation, headline finding, mechanism, model, equilibrium logic, main result, welfare or policy, empirical implications, conclusion, and appendix.
 
-The visible slide is concise; `speakerNotes` stores the explanation that should not be placed on the slide. Do not turn every paper paragraph into bullets. Prefer a claim plus evidence, a diagram plus interpretation, or an equation plus economic meaning.
+The visible slide is concise. Do not turn every paper paragraph into bullets. Prefer a claim plus evidence, a diagram plus interpretation, or an equation plus economic meaning.
 
 ## Workflow
 
@@ -33,7 +33,7 @@ The visible slide is concise; `speakerNotes` stores the explanation that should 
 
 - Title slides with title and subtitle.
 - Title-plus-bullets slides.
-- Structured article slides: claim, figure, equation, theorem, takeaway, and speaker notes.
+- Structured article slides: claim, figure, equation, theorem, and takeaway.
 - Add, delete, reorder, import, and export controls.
 - `clean`, `metropolis`, and `rochester` templates.
 
