@@ -7,6 +7,14 @@ description: Use when drafting project progress, research notes, or work-in-prog
 
 Use this skill for a slide-oriented project notebook. It provides a self-contained HTML editor whose slides map one-to-one to future Beamer frames.
 
+## Article mode
+
+Use `?article=1` or import an article JSON when turning a paper into a deck. Article mode is claim-driven rather than bullet-driven: each slide should have one audience-facing claim and may add a figure, equation, theorem, or takeaway.
+
+Supported article slide types are `claim`, `figure`, `equation`, `theorem`, and `takeaway`, in addition to `title` and `itemize`. Build the narrative in this order when appropriate: motivation, headline finding, mechanism, model, equilibrium logic, main result, welfare or policy, empirical implications, conclusion, and appendix.
+
+The visible slide is concise. Do not turn every paper paragraph into bullets. Prefer a claim plus evidence, a diagram plus interpretation, or an equation plus economic meaning.
+
 ## Workflow
 
 1. Open `assets/progress-draft.html` in a browser.
@@ -25,10 +33,11 @@ Use this skill for a slide-oriented project notebook. It provides a self-contain
 
 - Title slides with title and subtitle.
 - Title-plus-bullets slides.
+- Structured article slides: claim, figure, equation, theorem, and takeaway.
 - Add, delete, reorder, import, and export controls.
 - `clean`, `metropolis`, and `rochester` templates.
 
-The editor shows warnings for empty titles and more than five bullets but does not block drafting. The generator preserves user wording and reports formatting risks; it does not rewrite content or guarantee publication-ready formatting.
+The editor shows warnings for empty titles, more than five bullets, bullet-only article decks, and missing narrative components but does not block drafting. The generator preserves user wording and reports formatting risks; it does not invent evidence or guarantee publication-ready formatting.
 
 ## Boundaries
 

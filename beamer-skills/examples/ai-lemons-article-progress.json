@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "mode": "article",
+  "template": "clean",
+  "slides": [
+    {
+      "type": "title",
+      "title": "The AI Lemons Problem",
+      "subtitle": "How AI adoption can unravel prediction markets"
+    },
+    {
+      "type": "claim",
+      "frametitle": "AI can improve prediction while undermining market viability",
+      "claim": "Higher AI penetration widens spreads and drives out uninformed traders.",
+      "evidence": ["The informed share of order flow rises with AI adoption", "Uninformed participation is endogenous to the spread"],
+      "takeaway": "The market can collapse even as conditional prediction improves."
+    },
+    {
+      "type": "figure",
+      "frametitle": "AI adoption creates a self-reinforcing adverse-selection spiral",
+      "src": "../beamer-progress-draft/assets/ai-adverse-selection-spiral.png",
+      "caption": "AI adoption raises informational asymmetry, spreads, and uninformed exit.",
+      "takeaway": "Participation feedback is the mechanism that turns asymmetry into collapse."
+    },
+    {
+      "type": "equation",
+      "frametitle": "Pricing and participation form a fixed-point problem",
+      "equation": "s = α / [2(α + (1 − α)(1 − F(s)))]",
+      "definitions": ["s: equilibrium half-spread", "α: AI penetration", "F(s): share of uninformed traders priced out"],
+      "meaning": "A wider spread reduces participation and makes order flow more informative."
+    },
+    {
+      "type": "theorem",
+      "frametitle": "AI penetration above the threshold eliminates active equilibrium",
+      "statement": "If α > 2 z̄, no active equilibrium exists and the collapsed equilibrium is unique.",
+      "intuition": "The minimum AI-induced spread exceeds the strongest non-informational participation value."
+    },
+    {
+      "type": "takeaway",
+      "frametitle": "The paper's central trade-off is efficiency versus institutional survival",
+      "takeaway": "AI may improve price discovery while destroying the participation base that makes price discovery possible."
+    }
+  ]
+}

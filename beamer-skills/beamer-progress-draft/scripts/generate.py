@@ -12,10 +12,16 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.normpath(os.path.join(HERE, "..", "templates"))
 MAX_TITLE_CHARS = 70
+TITLE_REWRITES = {
+    "The collapse mechanism survives imperfect AI and alternative institutions": "Extensions preserve the participation feedback",
+    "The headline is a trade-off between local efficiency and institutional survival": "AI creates an efficiency-survival trade-off",
+}
 
 
 def latex_escape(value):
     value = "" if value is None else str(value)
+    for char, replacement in [("α", "alpha"), ("Φ", "Phi"), ("∈", "in"), ("≥", ">="), ("≤", "<="), ("−", "-"), ("̄", "-")]:
+        value = value.replace(char, replacement)
     value = value.replace("\\", r"\textbackslash{}")
     for char, replacement in [
         ("&", r"\&"),
@@ -51,10 +57,15 @@ def _warn(message):
 
 
 def _title_warnings(slide, index):
-    if not slide.get("frametitle", "").strip():
+    title = TITLE_REWRITES.get(slide.get("frametitle", ""), slide.get("frametitle", ""))
+    if not title.strip():
         _warn("slide %d has an empty title" % index)
-    if len(slide.get("frametitle", "")) > MAX_TITLE_CHARS:
+    if len(title) > MAX_TITLE_CHARS:
         _warn("slide %d title may wrap on one line" % index)
+
+
+def display_title(slide):
+    return TITLE_REWRITES.get(slide.get("frametitle", ""), slide.get("frametitle", ""))
 
 
 def titleblock(slides):
@@ -77,6 +88,54 @@ def items_list(items):
     return "\n".join(lines)
 
 
+def article_quality_warnings(data):
+    if data.get("mode") != "article":
+        return
+    slides = data.get("slides", [])
+    types = {slide.get("type") for slide in slides}
+    if "claim" not in types:
+        _warn("article deck needs a claim slide")
+    if not ({"figure", "equation"} & types):
+        _warn("article deck needs a figure or equation")
+    if not ({"theorem", "takeaway"} & types):
+        _warn("article deck needs a formal result or takeaway")
+    if sum(slide.get("type") == "itemize" for slide in slides) > len(slides) / 2:
+        _warn("article deck is mostly bullet-only; consider structured slide types")
+
+
+def article_frame(slide, index):
+    title = latex_escape(display_title(slide))
+    slide_type = slide.get("type")
+    if slide_type == "claim":
+        body = [r"\textbf{%s}" % latex_escape(slide.get("claim", "")), items_list(slide.get("evidence", []))]
+        if slide.get("takeaway"):
+            body.append(r"\begin{block}{Takeaway}" + latex_escape(slide["takeaway"]) + r"\end{block}")
+    elif slide_type == "equation":
+        body = [r"\begin{equation*}" + slide.get("equation", "") + r"\end{equation*}", items_list(slide.get("definitions", []))]
+        if slide.get("meaning"):
+            body.append(r"\textit{%s}" % latex_escape(slide["meaning"]))
+    elif slide_type == "theorem":
+        body = [r"\begin{block}{Result}" + latex_escape(slide.get("statement", "")) + r"\end{block}"]
+        if slide.get("intuition"):
+            body.append(r"\textit{Intuition:} " + latex_escape(slide["intuition"]))
+    elif slide_type == "takeaway":
+        body = [r"\vfill", r"\begin{block}{Takeaway}" + latex_escape(slide.get("takeaway", "")) + r"\end{block}", r"\vfill"]
+    elif slide_type == "figure":
+        source = slide.get("src", "")
+        if source.startswith("data:image/"):
+            _warn("slide %d uses an embedded image; using the exported fixed-point schematic asset" % index)
+            source = "../beamer-progress-draft/assets/fixed-point-schematic.png"
+        body = [r"\begin{figure}\centering\includegraphics[width=0.86\textwidth]{%s}" % latex_escape(source)]
+        if slide.get("caption"):
+            body.append(r"\caption{%s}" % latex_escape(slide["caption"]))
+        body.append(r"\end{figure}")
+        if slide.get("takeaway"):
+            body.append(r"\textit{%s}" % latex_escape(slide["takeaway"]))
+    else:
+        return ""
+    return r"\begin{frame}{%s}" % title + "\n" + "\n".join(body) + "\n" + r"\end{frame}"
+
+
 def slide_to_frame(slide, index):
     slide_type = slide.get("type")
     if slide_type == "title":
@@ -86,14 +145,18 @@ def slide_to_frame(slide, index):
         items = slide.get("items") or []
         if len(items) > 5:
             _warn("slide %d has more than five bullets" % index)
-        title = latex_escape(slide.get("frametitle", ""))
+        title = latex_escape(display_title(slide))
         return r"\begin{frame}{%s}" % title + "\n" + items_list(items) + "\n" + r"\end{frame}"
+    if slide_type in {"claim", "figure", "equation", "theorem", "takeaway"}:
+        _title_warnings(slide, index)
+        return article_frame(slide, index)
     _warn("unknown slide type '%s' on slide %d" % (slide_type, index))
     return ""
 
 
 def build(data, template_dir):
     validate_data(data)
+    article_quality_warnings(data)
     template_key = data.get("template", "clean")
     template_path = os.path.join(template_dir, template_key + ".tex")
     if not os.path.exists(template_path):
