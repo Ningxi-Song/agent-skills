@@ -40,6 +40,11 @@ class LiveDraftAutosaveContractTests(unittest.TestCase):
         self.assertIn("historyKey", self.text)
         self.assertIn("event.key.toLowerCase()==='z'", self.text)
 
+    def test_uses_raw_editor_and_enter_manages_bullets(self):
+        self.assertNotIn('id="theme"', self.text)
+        self.assertIn("key === 'Enter'", self.text)
+        self.assertIn("Backspace", self.text)
+
 
 if __name__ == "__main__":
     unittest.main()

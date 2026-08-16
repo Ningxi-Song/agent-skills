@@ -5,9 +5,15 @@ description: Use when visually drafting or editing Beamer decks in HTML, convert
 
 # Beamer Live Draft
 
-Use the bundled HTML editor as the visual drafting surface, then transpile its exported state into Beamer. The HTML is a structured editor, not a screenshot viewer: content remains editable through rich-text, diagram, formula, table, figure, and flow components.
+Use the bundled HTML editor as a raw visual drafting surface, then transpile its exported state into Beamer. The editor must present source content without imposing a Beamer theme, template styling, or decorative formatting. Content remains editable through rich-text, diagram, formula, table, figure, and flow components.
 
-This skill owns the editable preview-to-source pipeline. Use `beamer-format` for academic slide design rules and the PDF skill when source-page rendering or inspection is needed.
+This skill owns the editable preview-to-source pipeline. Do not select or bind a template in the editor. The user supplies the template path later; generation then binds that template and compiles the final deck.
+
+## Raw editor interaction (mandatory)
+
+The preview is content-first and template-free. Remove theme selectors and avoid visual decisions that belong to the final Beamer template. Keep only the structure needed to edit and review the original slide content.
+
+Bullet editors behave like a simple outline: Enter inserts a new `[占位要点]` immediately after the current point; Backspace on an empty point removes it when another point exists. These operations must preserve autosave and undo history.
 
 ## Full-deck intake (mandatory)
 
@@ -21,14 +27,14 @@ Review the complete draft against the source manifest yourself. Do not wait for 
 
 ## Preserving user edits (mandatory)
 
-The live state is the source of truth after the editor is opened. It uses a schema-versioned `localStorage` key based on the stable pathname, migrates legacy state, preserves unknown fields, and keeps a last-good snapshot.
+The live state is the source of truth after the editor is opened. It uses a schema-versioned `localStorage` key based on the stable pathname, migrates legacy state, preserves unknown fields, keeps a last-good snapshot, and records undo history.
 
 Before changing an existing draft:
 
 1. Capture the active editor state without reloading first.
-2. Apply the requested change to that captured state. Preserve IDs, slide order, deleted content, component structure, theme, and active slide unless the user requests otherwise.
+2. Apply the requested change to that captured state. Preserve IDs, slide order, deleted content, component structure, and active slide unless the user requests otherwise.
 3. Let the editor save the revision. Export a JSON backup before replacing editor code.
-4. After an editor update, test save, reload, and restore, including last-good recovery.
+4. After an editor update, test save, reload, and restore, then test undo, including last-good recovery.
 
 Never reconstruct an edited deck from the initial seed or original prompt. If live state is unavailable, restore the exported backup or last-good snapshot before considering reconstruction.
 
@@ -37,15 +43,15 @@ Never reconstruct an edited deck from the initial seed or original prompt. If li
 1. Copy `assets/beamer-draft.html` to a stable writable workspace path such as `beamer-draft.html`.
 2. For an existing deck, complete the full-deck intake and source manifest first. For a new deck, define the intended outline and component types.
 3. Seed every slide and meaningful component in the structured draft state.
-4. Serve the workspace over local HTTP and open the editor in the preview panel.
+4. Serve the workspace over local HTTP and open the raw editor in the preview panel.
 5. Preserve live edits on every follow-up; do not rewrite the HTML merely to change slide contents.
-6. Export or capture the current JSON state and run `scripts/generate.py`.
+6. Export or capture the current JSON state. When the user supplies a template path, pass that template to generation and compile the final deck.
 7. For an existing deck, run `scripts/audit_draft.py` against the source manifest.
 8. Compile and visually inspect the generated Beamer output.
 
 ## Draft state
 
-The state contains deck metadata and an ordered `slides` array. Slides contain typed, editable components with stable IDs. Preserve slide and component IDs across revisions so saved edits remain attached to the correct content.
+The state contains deck metadata and an ordered `slides` array. Slides contain typed, editable components with stable IDs. Preserve slide and component IDs across revisions so saved edits remain attached to the correct content. Template selection is not part of the editor contract.
 
 Supported component types are:
 
@@ -85,5 +91,5 @@ Templates live in `templates/` and use `<<TITLEBLOCK>>` and `<<SLIDES>>`. See `r
 - Ensure every slide remains editable and no full-page raster is used.
 - Ensure complex visuals are recreated structurally rather than degraded to bullets.
 - Run `audit_draft.py` and resolve every reported fidelity or layout issue.
-- Verify save, reload, and restore, including migration and last-good recovery.
+- Verify save, reload, restore, and undo, including migration and last-good recovery.
 - Generate `.tex`, compile when possible, and visually inspect the resulting deck.
