@@ -17,7 +17,7 @@
     "id": "beamer-live-draft",
     "path": "beamer-live-draft",
     "link": "beamer-skills/beamer-live-draft/SKILL.md",
-    "description": "Interactive Beamer-style HTML draft editor (right-panel) + JSON→tex/PDF transpiler",
+    "description": "Interactive Beamer-style HTML draft editor with autosave + tex/PDF transpiler",
     "creator": "Willie Song"
   },
   {
