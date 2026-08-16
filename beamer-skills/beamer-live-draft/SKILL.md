@@ -1,133 +1,89 @@
 ---
 name: beamer-live-draft
-description: >
-  Interactive Beamer draft editor + transpiler. When invoked, it renders a
-  self-contained, Beamer-styled HTML preview in the right panel that the user
-  edits directly (title/itemize/columns/block slides), then converts the
-  returned draft into a real Beamer .tex (and optionally PDF) using a chosen
-  template. Use when the user wants to "visually draft" slides, "edit a Beamer
-  deck in HTML", "interactive beamer preview", "beamer 草稿", "beamer 可视化编辑",
-  "beamer 中转", "slides editor", or "generate beamer from a draft".
+description: Use when visually drafting or editing Beamer decks in HTML, converting an existing PDF or TeX deck into an editable draft, or generating Beamer from a live draft.
 ---
 
-# Beamer Live Draft — 可视化草稿编辑与中转
+# Beamer Live Draft
 
-A skill that turns Beamer authoring into a two-step loop:
+Use the bundled HTML editor as the visual drafting surface, then transpile its exported state into Beamer. The HTML is a structured editor, not a screenshot viewer: content remains editable through rich-text, diagram, formula, table, figure, and flow components.
 
-1. **Draft** — the agent emits a self-contained HTML editor that mimics a Beamer
-   slide (16:9, color bar, frame title, itemize / two-column / block layouts).
-   The user edits text **directly in the preview panel**; every change is saved
-   automatically in that browser.
-2. **Transpile** — the agent captures the current live state, binds it to a
-   Beamer template, and generates a final `.tex` / `.pdf`.
+This skill owns the editable preview-to-source pipeline. Use `beamer-format` for academic slide design rules and the PDF skill when source-page rendering or inspection is needed.
 
-It is a *visual scratchpad and translator*, not a replacement for
-[beamer-format](../beamer-format/SKILL.md) — that skill owns the
-content/design rules; this one owns the editable preview → source pipeline.
+## Full-deck intake (mandatory)
+
+When a PDF, TeX file, or existing slide deck is the source, inspect every source slide before presenting the draft. Do not stop after a representative sample.
+
+Create a source manifest recording the complete slide count, order, titles, and expected component types. Classify each slide's meaningful content as title, rich text, diagram, formula, table, figure, or flow. Treat the manifest as the acceptance contract for the HTML draft.
+
+Never silently degrade a diagram, formula, table, figure, or flow into generic bullet text. Recreate diagrams and flows with editable HTML/SVG structures, preserve formulas as editable math source, represent tables structurally, and use individual figure assets only when the source truly contains a figure. A full-page raster image is forbidden because it is not an editable slide implementation.
+
+Review the complete draft against the source manifest yourself. Do not wait for the user to identify mismatches one slide at a time.
 
 ## Preserving user edits (mandatory)
 
-The live editor's DOM and its URL-scoped `localStorage` snapshot are the source
-of truth. The starter HTML file is **not** a source of truth after it has been
-opened: it contains only the initial seed and writing it again can erase edits.
+The live state is the source of truth after the editor is opened. It uses a schema-versioned `localStorage` key based on the stable pathname, migrates legacy state, preserves unknown fields, and keeps a last-good snapshot.
 
-Before changing an existing draft, use this order:
+Before changing an existing draft:
 
-1. Capture the active editor's current DOM/state in the existing browser
-   session; do not reload it first.
-2. Apply the requested change to that captured state only. Preserve slide
-   order, deleted content, inline text, layout choices, theme, and the active
-   slide unless the user asks to change them.
-3. Let the editor persist the revised state automatically. Do not overwrite the
-   editor HTML merely to update slide contents.
+1. Capture the active editor state without reloading first.
+2. Apply the requested change to that captured state. Preserve IDs, slide order, deleted content, component structure, theme, and active slide unless the user requests otherwise.
+3. Let the editor save the revision. Export a JSON backup before replacing editor code.
+4. After an editor update, test save, reload, and restore, including last-good recovery.
 
-If the current state cannot be captured, stop and ask the user to reopen the
-saved editor. Never reconstruct an existing deck from the original prompt,
-cached seed, or the `let slides = [...]` initializer. In particular, do not
-infer “second bullet” or “this slide” from the starter deck: resolve them from
-the captured current order.
-
----
-
-## Four design decisions (as requested)
-
-### 1. Trigger 触发方式
-
-The agent loads this skill when the user asks to draft/edit Beamer slides
-visually or to turn an editable preview into a deck. Trigger phrases include:
-
-- English: "beamer draft", "interactive beamer preview", "slides editor",
-  "edit beamer in HTML", "generate beamer from a draft", "beamer transpiler"
-- 中文: "beamer 草稿", "beamer 可视化编辑", "幻灯片草稿", "beamer 中转",
-  "生成 beamer 预览", "把草稿变成 beamer"
-
-On trigger, follow the **Workflow** below. Do not hand-write `.tex` for the
-draft stage — the editor is the source of truth.
-
-### 2. Right-panel rendering 右侧渲染区域
-
-- The editor is a single self-contained file:
-  `assets/beamer-draft.html` (inline CSS + JS, **no external dependencies**).
-- The agent **copies** it to a writable location in the user's workspace
-  (e.g. `./beamer-draft.html`) then opens it with `present_files` — this renders
-  it in WorkBuddy's built-in
-  browser preview panel (the right side).
-- The page scales to fit the panel width and uses `contenteditable` regions for
-  every text field, so the user edits in place (no code, no LaTeX).
-
-### 3. Content-return interface 内容回传接口
-
-The preview saves continuously in browser `localStorage`; it has no JSON
-import/export controls. For a follow-up request, the agent reads the live
-editor state from the existing browser session. For transpilation, the agent
-may write a temporary JSON snapshot itself, but never asks the user to export,
-paste, import, or manage JSON.
-
-### 4. Template binding & generation 模板绑定与生成流程
-
-- Templates live in `templates/`, one full Beamer document per theme, each with
-  two placeholders: `<<TITLEBLOCK>>` (filled from the first `title` slide) and
-  `<<SLIDES>>` (all frames). Current keys: `clean` (Madrid), `metropolis`,
-  `rochester`. See [references/templates.md](references/templates.md) for the
-  registry and how to add a custom template.
-- The editor's **theme selector** saves the `template` key in the live snapshot.
-- `scripts/generate.py` does the transpile:
-
-  ```bash
-  python scripts/generate.py snapshot.json --out slides.tex --compile
-  ```
-
-  It maps each slide type → Beamer frame (title→`\titlepage`, itemize→`itemize`,
-  columns→`columns`, block→`block`), LaTeX-escapes all text, and (with
-  `--compile`) auto-detects `pdflatex`/`xelatex`/`lualatex` and produces a PDF.
-  If no engine is installed, it writes `.tex` only and tells the user to compile.
-- The agent then `present_files` the resulting `slides.tex` (or `.pdf`).
-
----
+Never reconstruct an edited deck from the initial seed or original prompt. If live state is unavailable, restore the exported backup or last-good snapshot before considering reconstruction.
 
 ## Workflow
 
-1. **Kick off.** On trigger, tell the user you'll open an editable Beamer draft.
-   Copy `assets/beamer-draft.html` into the workspace and `present_files` it.
-   Seed a starter deck (title + itemize) by default; or ask the user for the
-   topic / number of slides first if they gave none.
-2. **User edits.** The user revises text in the right panel and (optionally)
-   re-arranges slides. The live editor state now supersedes the initial HTML.
-3. **Revise safely.** For every follow-up change, follow **Preserving user
-   edits** above before editing any file.
-4. **Transpile.** Capture the current state and write a temporary JSON snapshot
-   for `scripts/generate.py`; do not disturb the saved live editor.
-   Run `scripts/generate.py <snapshot.json> --out slides.tex
-   [--compile]`. If `--compile` is requested but no LaTeX engine exists, report
-   the `.tex` path and the compile command.
-5. **Deliver.** `present_files` the `.tex` (or `.pdf`). Optionally open
-   [beamer-format](../beamer-format/SKILL.md) rules to sanity-check
-   formatting (single-line frame titles, 3–5 bullets, no empty bottom).
+1. Copy `assets/beamer-draft.html` to a stable writable workspace path such as `beamer-draft.html`.
+2. For an existing deck, complete the full-deck intake and source manifest first. For a new deck, define the intended outline and component types.
+3. Seed every slide and meaningful component in the structured draft state.
+4. Serve the workspace over local HTTP and open the editor in the preview panel.
+5. Preserve live edits on every follow-up; do not rewrite the HTML merely to change slide contents.
+6. Export or capture the current JSON state and run `scripts/generate.py`.
+7. For an existing deck, run `scripts/audit_draft.py` against the source manifest.
+8. Compile and visually inspect the generated Beamer output.
 
-### Tips for the agent
+## Draft state
 
-- Keep the editable HTML at a stable local URL; the saved browser state is keyed
-  to that URL.
-- If the user wants a custom Beamer theme, add a `<key>.tex` to `templates/`
-  (copy `clean.tex` as a base) and tell them to pick it in the selector.
-- The live state is the contract between the draft and subsequent revisions.
+The state contains deck metadata and an ordered `slides` array. Slides contain typed, editable components with stable IDs. Preserve slide and component IDs across revisions so saved edits remain attached to the correct content.
+
+Supported component types are:
+
+- `rich-text`: headings, paragraphs, and lists
+- `diagram`: editable nodes, edges, labels, and styles
+- `formula`: editable LaTeX math source
+- `table`: editable headers, rows, cells, and alignment
+- `figure`: a real figure asset with editable caption and sizing
+- `flow`: editable process nodes and connectors
+
+Unknown fields must survive migration. Unknown component types must not be silently converted.
+
+## Generation and audit
+
+Generate Beamer source with:
+
+```powershell
+py scripts/generate.py draft.json --out slides.tex --compile
+```
+
+The generator maps structured components to native Beamer/LaTeX structures. Unsupported content must fail with its slide ID and component ID; it must not quietly substitute bullets.
+
+Audit an existing-deck draft with:
+
+```powershell
+py scripts/audit_draft.py source-manifest.json draft.json
+```
+
+The audit compares full-deck count, order, titles, component types, forbidden full-page raster use, and recorded layout checks such as title wrapping, overflow, missing assets, and empty bodies.
+
+Templates live in `templates/` and use `<<TITLEBLOCK>>` and `<<SLIDES>>`. See `references/templates.md` for the registry.
+
+## Completion checklist
+
+- Inspect every source slide and build a source manifest.
+- Confirm count, order, titles, and component types match the source.
+- Ensure every slide remains editable and no full-page raster is used.
+- Ensure complex visuals are recreated structurally rather than degraded to bullets.
+- Run `audit_draft.py` and resolve every reported fidelity or layout issue.
+- Verify save, reload, and restore, including migration and last-good recovery.
+- Generate `.tex`, compile when possible, and visually inspect the resulting deck.
