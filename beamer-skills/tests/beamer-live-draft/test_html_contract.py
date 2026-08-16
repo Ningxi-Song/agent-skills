@@ -34,6 +34,12 @@ class LiveDraftAutosaveContractTests(unittest.TestCase):
         self.assertIn("fullPageRaster", self.text)
         self.assertIn("Full-page raster slides are prohibited", self.text)
 
+    def test_exposes_undo_history_and_keyboard_command(self):
+        self.assertIn('id="undoDraft"', self.text)
+        self.assertIn("function undoDraft()", self.text)
+        self.assertIn("historyKey", self.text)
+        self.assertIn("event.key.toLowerCase()==='z'", self.text)
+
 
 if __name__ == "__main__":
     unittest.main()

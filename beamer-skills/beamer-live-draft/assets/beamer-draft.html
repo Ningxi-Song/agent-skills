@@ -71,6 +71,7 @@ ul.beamer li:before{ content:"▸"; color:var(--navy); position:absolute; left:0
   <button class="add" id="addItem">+ 要点页</button>
   <button class="add" id="addCols">+ 分栏页</button>
   <button class="add" id="addBlock">+ 区块页</button>
+  <button id="undoDraft" title="撤销上一步修改（Ctrl+Z）">↶ 撤销</button>
   <select id="theme" title="选择 Beamer 主题（对应模板）">
     <option value="clean">主题: Clean (Madrid)</option>
     <option value="metropolis">主题: Metropolis</option>
@@ -106,6 +107,10 @@ const componentTypes=new Set(['diagram','formula','table','figure','flow','rich-
 const storageKey='beamer-live-draft:'+location.pathname+':v2';
 const legacyStorageKey='beamer-live-draft:'+location.pathname;
 const deckId=location.pathname;
+const historyKey=storageKey+':history';
+let draftHistory=[];
+let draftLastSaved=null;
+let draftUndoing=false;
 
 function uid(prefix){return prefix+'-'+Math.random().toString(36).slice(2,10);}
 function richSlide(title='要点页标题',items=['第一个要点','第二个要点','第三个要点']){return {id:uid('slide'),role:'content',frametitle:title,components:[{id:uid('component'),type:'rich-text',items}]};}
@@ -117,8 +122,9 @@ function legacyComponents(s,i){const id='slide-'+(i+1)+'-component-1';if(s.type=
 function migrateState(old){if(old&&old.schemaVersion===SCHEMA_VERSION)return old;const known=new Set(['id','type','frametitle','title','subtitle','author','institute','date','items','left','right','blocktitle','body']);return {schemaVersion:SCHEMA_VERSION,deckId,template:old?.template||'clean',active:old?.active||0,slides:(old?.slides||[]).map((s,i)=>({id:s.id||'slide-'+(i+1),role:s.type==='title'?'title':'content',frametitle:s.frametitle||'',components:legacyComponents(s,i),legacy:Object.fromEntries(Object.entries(s).filter(([k])=>!known.has(k)))}))};}
 function snapshot(){return {schemaVersion:SCHEMA_VERSION,deckId,template:document.getElementById('theme').value,slides,active};}
 function validateState(state){if(!state||state.schemaVersion!==SCHEMA_VERSION||!Array.isArray(state.slides)||!state.slides.length)throw new Error('invalid draft state');for(const s of state.slides){if(!s.id||!Array.isArray(s.components))throw new Error('invalid slide');for(const c of s.components){if(!componentTypes.has(c.type))throw new Error('unsupported component '+c.type);if(c.type==='figure'&&c.fullPageRaster)throw new Error('Full-page raster slides are prohibited');}}return state;}
-function persist(){const status=document.getElementById('saveStatus');try{const state=validateState(snapshot());const previous=localStorage.getItem(storageKey);if(previous!==null)localStorage.setItem(storageKey+':last-good',previous);const encoded=JSON.stringify(state);localStorage.setItem(storageKey+':pending',encoded);validateState(JSON.parse(localStorage.getItem(storageKey+':pending')));localStorage.setItem(storageKey,encoded);localStorage.removeItem(storageKey+':pending');status.textContent='已自动保存';}catch(err){status.textContent='无法自动保存：'+err.message;}}
-function restore(){try{let raw=localStorage.getItem(storageKey);if(raw===null)raw=localStorage.getItem(legacyStorageKey);if(raw===null)return;const saved=validateState(migrateState(JSON.parse(raw)));slides=saved.slides;active=Math.max(0,Math.min(saved.active,slides.length-1));document.getElementById('theme').value=saved.template;}catch(err){const backup=localStorage.getItem(storageKey+':last-good');if(backup){try{const saved=validateState(JSON.parse(backup));slides=saved.slides;active=saved.active;}catch{}}document.getElementById('saveStatus').textContent='恢复失败，已保留旧数据';}}
+function persist(){const status=document.getElementById('saveStatus');try{const state=validateState(snapshot());const encoded=JSON.stringify(state);if(draftLastSaved!==null&&encoded!==draftLastSaved&&!draftUndoing){draftHistory.push(draftLastSaved);if(draftHistory.length>50)draftHistory.shift();}const previous=localStorage.getItem(storageKey);if(previous!==null)localStorage.setItem(storageKey+':last-good',previous);localStorage.setItem(storageKey+':pending',encoded);validateState(JSON.parse(localStorage.getItem(storageKey+':pending')));localStorage.setItem(storageKey,encoded);localStorage.removeItem(storageKey+':pending');localStorage.setItem(historyKey,JSON.stringify(draftHistory));draftLastSaved=encoded;status.textContent='已自动保存';}catch(err){status.textContent='无法自动保存：'+err.message;}}
+function undoDraft(){if(!draftHistory.length)return;try{const previous=JSON.parse(draftHistory.pop());slides=previous.slides;active=Math.max(0,Math.min(Number(previous.active)||0,slides.length-1));draftUndoing=true;render();draftUndoing=false;persist();}catch(err){console.warn('Draft undo failed:',err);}}
+function restore(){try{let raw=localStorage.getItem(storageKey);if(raw===null)raw=localStorage.getItem(legacyStorageKey);if(raw===null)return;const saved=validateState(migrateState(JSON.parse(raw)));slides=saved.slides;active=Math.max(0,Math.min(saved.active,slides.length-1));document.getElementById('theme').value=saved.template;draftLastSaved=JSON.stringify(saved);const history=JSON.parse(localStorage.getItem(historyKey)||'[]');if(Array.isArray(history))draftHistory=history.slice(-50);}catch(err){const backup=localStorage.getItem(storageKey+':last-good');if(backup){try{const saved=validateState(JSON.parse(backup));slides=saved.slides;active=saved.active;}catch{}}document.getElementById('saveStatus').textContent='恢复失败，已保留旧数据';}}
 function editable(tag,cls,value,onChange){const e=ce(tag,cls,value??'');e.contentEditable='true';e.addEventListener('input',()=>{onChange(e.innerText);persist();});return e;}
 function renderItems(items){const ul=ce('ul','beamer');items.forEach((item,i)=>{const li=ce('li');li.appendChild(editable('div',null,item,v=>items[i]=v));ul.appendChild(li);});return ul;}
 function renderRichText(c,host){const wrap=ce('div','component-rich');if(Array.isArray(c.items))wrap.appendChild(renderItems(c.items));else if(Array.isArray(c.columns)){const cols=ce('div','cols');c.columns.forEach(col=>{const d=ce('div','col');d.appendChild(renderItems(col));cols.appendChild(d);});wrap.appendChild(cols);}else{wrap.appendChild(editable('div','bh',c.blocktitle,v=>c.blocktitle=v));wrap.appendChild(editable('div','bb',c.body,v=>c.body=v));}host.appendChild(wrap);}
@@ -138,6 +144,8 @@ function fit(){
 window.addEventListener('resize', fit);
 
 document.getElementById('theme').onchange=()=>persist();
+document.getElementById('undoDraft').onclick=undoDraft;
+document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();undoDraft();}});
 document.getElementById('addTitle').onclick=()=>{ slides.splice(active+1,0,blankSlide('title')); active++; render(); };
 document.getElementById('addItem').onclick=()=>{ slides.splice(active+1,0,blankSlide('itemize')); active++; render(); };
 document.getElementById('addCols').onclick=()=>{ slides.splice(active+1,0,blankSlide('columns')); active++; render(); };
