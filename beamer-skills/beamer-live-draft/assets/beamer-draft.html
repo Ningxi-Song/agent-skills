@@ -50,6 +50,16 @@ ul.beamer li:before{ content:"▸"; color:var(--navy); position:absolute; left:0
 .slide .block{ border:2px solid var(--navy); border-radius:6px; margin-top:6px;}
 .slide .block .bh{ background:var(--navy); color:#fff; padding:6px 12px; font-size:18px; font-weight:600;}
 .slide .block .bb{ padding:12px 14px; font-size:20px; color:var(--ink);}
+.component-stack{display:flex;flex-direction:column;gap:14px;height:100%;justify-content:center;}
+.component-formula{font:italic 26px Georgia,serif;text-align:center;white-space:pre-wrap;}
+.component-table{border-collapse:collapse;width:92%;margin:auto;font-size:18px;}
+.component-table th,.component-table td{border-bottom:1px solid #aaa;padding:7px 9px;text-align:center;}
+.component-table th{border-top:2px solid #222;border-bottom:2px solid #222;}
+.component-figure{display:block;max-width:94%;max-height:410px;margin:auto;object-fit:contain;}
+.component-canvas{position:relative;height:300px;border:1px dashed #ddd;}
+.component-node{position:absolute;min-width:90px;padding:11px 14px;border:2px solid #222;border-radius:7px;background:#fff;text-align:center;z-index:2;}
+.component-edge-layer{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
+.component-rich ul{margin:0;padding-left:28px}.component-rich li{margin:8px 0;font-size:21px;}
 .mini-add{ display:inline-block; margin-top:8px; font-size:13px; padding:3px 8px; border:1px dashed #99a; border-radius:5px; cursor:pointer; background:#fff;}
 .tip{ position:fixed; bottom:0; left:210px; right:0; background:#fff; border-top:1px solid #ddd; padding:6px 12px; font-size:12px; color:#666; z-index:15;}
 </style>
@@ -67,6 +77,7 @@ ul.beamer li:before{ content:"▸"; color:var(--navy); position:absolute; left:0
     <option value="rochester">主题: Rochester</option>
   </select>
   <span class="spacer"></span>
+  <button id="exportBackup">导出备份</button>
   <span id="saveStatus" style="font-size:12px;color:#666;">自动保存已启用</span>
 </header>
 <div class="main">
@@ -90,104 +101,35 @@ let active = 0;
 
 function ce(tag, cls, html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
 function ed(cls, text){ const d=ce('div', cls, (text!=null?text:'')); d.contentEditable='true'; return d; }
-function blankSlide(type){
-  if(type==='title') return {type:'title', title:'演示标题', subtitle:'副标题（可选）', author:'作者', institute:'单位', date:'2026'};
-  if(type==='itemize') return {type:'itemize', frametitle:'要点页标题', items:['第一个要点','第二个要点','第三个要点']};
-  if(type==='columns') return {type:'columns', frametitle:'分栏页标题', left:['左栏要点一','左栏要点二'], right:['右栏要点一','右栏要点二']};
-  if(type==='block') return {type:'block', frametitle:'区块页标题', blocktitle:'区块标题', body:'区块正文内容。'};
-}
-let slides = [ blankSlide('title'), blankSlide('itemize') ];
-const storageKey = 'beamer-live-draft:' + location.pathname;
+const SCHEMA_VERSION=2;
+const componentTypes=new Set(['diagram','formula','table','figure','flow','rich-text']);
+const storageKey='beamer-live-draft:'+location.pathname+':v2';
+const legacyStorageKey='beamer-live-draft:'+location.pathname;
+const deckId=location.pathname;
 
-function snapshot(){
-  return { template: document.getElementById('theme').value, slides: slides, active: active };
-}
-function restore(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(storageKey));
-    if(!saved || !Array.isArray(saved.slides) || !saved.slides.length || typeof saved.template!=='string' || !Number.isInteger(saved.active)) return;
-    slides=saved.slides;
-    active=Math.max(0,Math.min(saved.active,slides.length-1));
-    document.getElementById('theme').value=saved.template;
-  }catch(err){}
-}
-function persist(){
-  const status=document.getElementById('saveStatus');
-  try{
-    localStorage.setItem(storageKey,JSON.stringify(snapshot()));
-    status.textContent='已自动保存';
-  }catch(err){ status.textContent='无法自动保存'; }
-}
+function uid(prefix){return prefix+'-'+Math.random().toString(36).slice(2,10);}
+function richSlide(title='要点页标题',items=['第一个要点','第二个要点','第三个要点']){return {id:uid('slide'),role:'content',frametitle:title,components:[{id:uid('component'),type:'rich-text',items}]};}
+function titleSlide(){return {id:uid('slide'),role:'title',frametitle:'',components:[{id:uid('component'),type:'rich-text',role:'title',title:'演示标题',subtitle:'副标题（可选）',author:'作者',institute:'单位',date:'2026'}]};}
+function blankSlide(type){if(type==='title')return titleSlide();if(type==='columns')return {id:uid('slide'),role:'content',frametitle:'分栏页标题',components:[{id:uid('component'),type:'rich-text',columns:[['左栏要点一','左栏要点二'],['右栏要点一','右栏要点二']]}]};if(type==='block')return {id:uid('slide'),role:'content',frametitle:'区块页标题',components:[{id:uid('component'),type:'rich-text',blocktitle:'区块标题',body:'区块正文内容。'}]};return richSlide();}
+let slides=[titleSlide(),richSlide()];
 
-function itemList(arr){
-  const ul=ce('ul','beamer');
-  arr.forEach((txt,i)=>{
-    const li=ce('li');
-    const d=ed(null,txt); d.addEventListener('input',()=>{ arr[i]=d.innerText; persist(); });
-    li.appendChild(d);
-    const del=ce('span','mini','✕'); del.style.marginLeft='8px';
-    del.onclick=()=>{ arr.splice(i,1); render(); };
-    li.appendChild(del);
-    ul.appendChild(li);
-  });
-  const add=ce('span','mini-add','+ 添加要点');
-  add.onclick=()=>{ arr.push('新要点'); render(); };
-  ul.appendChild(add);
-  return ul;
-}
-
-function render(){
-  sideEl.innerHTML='';
-  slides.forEach((s,i)=>{
-    const it=ce('div','slideitem'+(i===active?' active':''));
-    it.appendChild(ce('span','num', String(i+1)));
-    const lbl = (s.type==='title') ? ('标题：'+(s.title||'')) : (s.frametitle||s.type);
-    it.appendChild(ce('span','lbl', lbl));
-    const up=ce('button','mini','↑'); up.onclick=(e)=>{e.stopPropagation(); if(i>0){[slides[i-1],slides[i]]=[slides[i],slides[i-1]]; active=i-1; render();}};
-    const dn=ce('button','mini','↓'); dn.onclick=(e)=>{e.stopPropagation(); if(i<slides.length-1){[slides[i+1],slides[i]]=[slides[i],slides[i+1]]; active=i+1; render();}};
-    const rm=ce('button','mini','✕'); rm.onclick=(e)=>{e.stopPropagation(); slides.splice(i,1); if(active>=slides.length)active=slides.length-1; render();};
-    it.appendChild(up); it.appendChild(dn); it.appendChild(rm);
-    it.onclick=()=>{ active=i; render(); };
-    sideEl.appendChild(it);
-  });
-
-  const s=slides[active];
-  slideEl.innerHTML='';
-  slideEl.appendChild(ce('div','topbar'));
-  if(s.type==='title'){
-    const tm=ce('div','title-main');
-    const t=ed('t', s.title); t.oninput=()=>{s.title=t.innerText;persist();};
-    const sub=ed('s', s.subtitle); sub.oninput=()=>{s.subtitle=sub.innerText;persist();};
-    tm.appendChild(t); tm.appendChild(ce('br')); tm.appendChild(sub);
-    slideEl.appendChild(tm);
-    const meta=ce('div','meta');
-    const a=ed(null,s.author); a.oninput=()=>{s.author=a.innerText;persist();};
-    const ins=ed(null,s.institute); ins.oninput=()=>{s.institute=ins.innerText;persist();};
-    const dt=ed(null,s.date); dt.oninput=()=>{s.date=dt.innerText;persist();};
-    meta.appendChild(a); meta.appendChild(ce('br')); meta.appendChild(ins); meta.appendChild(ce('br')); meta.appendChild(dt);
-    slideEl.appendChild(meta);
-  } else {
-    const fh=ce('div','framehead');
-    const ft=ed('ft', s.frametitle||''); ft.oninput=()=>{s.frametitle=ft.innerText;persist();}; fh.appendChild(ft);
-    slideEl.appendChild(fh);
-    const body=ce('div','body');
-    if(s.type==='itemize'){ body.appendChild(itemList(s.items)); }
-    else if(s.type==='columns'){
-      const cols=ce('div','cols');
-      const l=ce('div','col'); l.appendChild(itemList(s.left));
-      const r=ce('div','col'); r.appendChild(itemList(s.right));
-      cols.appendChild(l); cols.appendChild(r); body.appendChild(cols);
-    } else if(s.type==='block'){
-      const bl=ce('div','block');
-      const bh=ce('div','bh'); const bt=ed(null,s.blocktitle||''); bt.oninput=()=>{s.blocktitle=bt.innerText;persist();}; bh.appendChild(bt);
-      const bb=ce('div','bb'); const bd=ed(null,s.body||''); bd.oninput=()=>{s.body=bd.innerText;persist();}; bb.appendChild(bd);
-      bl.appendChild(bh); bl.appendChild(bb); body.appendChild(bl);
-    }
-    slideEl.appendChild(body);
-  }
-  persist();
-  fit();
-}
+function legacyComponents(s,i){const id='slide-'+(i+1)+'-component-1';if(s.type==='title')return [{id,type:'rich-text',role:'title',title:s.title||'',subtitle:s.subtitle||'',author:s.author||'',institute:s.institute||'',date:s.date||''}];if(s.type==='columns')return [{id,type:'rich-text',columns:[s.left||[],s.right||[]]}];if(s.type==='block')return [{id,type:'rich-text',blocktitle:s.blocktitle||'',body:s.body||''}];return [{id,type:'rich-text',items:s.items||[]}];}
+function migrateState(old){if(old&&old.schemaVersion===SCHEMA_VERSION)return old;const known=new Set(['id','type','frametitle','title','subtitle','author','institute','date','items','left','right','blocktitle','body']);return {schemaVersion:SCHEMA_VERSION,deckId,template:old?.template||'clean',active:old?.active||0,slides:(old?.slides||[]).map((s,i)=>({id:s.id||'slide-'+(i+1),role:s.type==='title'?'title':'content',frametitle:s.frametitle||'',components:legacyComponents(s,i),legacy:Object.fromEntries(Object.entries(s).filter(([k])=>!known.has(k)))}))};}
+function snapshot(){return {schemaVersion:SCHEMA_VERSION,deckId,template:document.getElementById('theme').value,slides,active};}
+function validateState(state){if(!state||state.schemaVersion!==SCHEMA_VERSION||!Array.isArray(state.slides)||!state.slides.length)throw new Error('invalid draft state');for(const s of state.slides){if(!s.id||!Array.isArray(s.components))throw new Error('invalid slide');for(const c of s.components){if(!componentTypes.has(c.type))throw new Error('unsupported component '+c.type);if(c.type==='figure'&&c.fullPageRaster)throw new Error('Full-page raster slides are prohibited');}}return state;}
+function persist(){const status=document.getElementById('saveStatus');try{const state=validateState(snapshot());const previous=localStorage.getItem(storageKey);if(previous!==null)localStorage.setItem(storageKey+':last-good',previous);const encoded=JSON.stringify(state);localStorage.setItem(storageKey+':pending',encoded);validateState(JSON.parse(localStorage.getItem(storageKey+':pending')));localStorage.setItem(storageKey,encoded);localStorage.removeItem(storageKey+':pending');status.textContent='已自动保存';}catch(err){status.textContent='无法自动保存：'+err.message;}}
+function restore(){try{let raw=localStorage.getItem(storageKey);if(raw===null)raw=localStorage.getItem(legacyStorageKey);if(raw===null)return;const saved=validateState(migrateState(JSON.parse(raw)));slides=saved.slides;active=Math.max(0,Math.min(saved.active,slides.length-1));document.getElementById('theme').value=saved.template;}catch(err){const backup=localStorage.getItem(storageKey+':last-good');if(backup){try{const saved=validateState(JSON.parse(backup));slides=saved.slides;active=saved.active;}catch{}}document.getElementById('saveStatus').textContent='恢复失败，已保留旧数据';}}
+function editable(tag,cls,value,onChange){const e=ce(tag,cls,value??'');e.contentEditable='true';e.addEventListener('input',()=>{onChange(e.innerText);persist();});return e;}
+function renderItems(items){const ul=ce('ul','beamer');items.forEach((item,i)=>{const li=ce('li');li.appendChild(editable('div',null,item,v=>items[i]=v));ul.appendChild(li);});return ul;}
+function renderRichText(c,host){const wrap=ce('div','component-rich');if(Array.isArray(c.items))wrap.appendChild(renderItems(c.items));else if(Array.isArray(c.columns)){const cols=ce('div','cols');c.columns.forEach(col=>{const d=ce('div','col');d.appendChild(renderItems(col));cols.appendChild(d);});wrap.appendChild(cols);}else{wrap.appendChild(editable('div','bh',c.blocktitle,v=>c.blocktitle=v));wrap.appendChild(editable('div','bb',c.body,v=>c.body=v));}host.appendChild(wrap);}
+function renderFormula(c,host){host.appendChild(editable('div','component-formula',c.tex||c.text||'',v=>c.tex=v));}
+function renderTable(c,host){const t=ce('table','component-table');const head=ce('tr');(c.headers||[]).forEach((v,i)=>head.appendChild(editable('th',null,v,x=>c.headers[i]=x)));t.appendChild(head);(c.rows||[]).forEach((row,ri)=>{const tr=ce('tr');row.forEach((v,ci)=>tr.appendChild(editable('td',null,v,x=>c.rows[ri][ci]=x)));t.appendChild(tr);});host.appendChild(t);}
+function renderFigure(c,host){if(c.fullPageRaster)throw new Error('Full-page raster slides are prohibited');const img=ce('img','component-figure');img.src=c.src||'';img.alt=c.alt||'';host.appendChild(img);}
+function renderNetwork(c,host){const canvas=ce('div','component-canvas');const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','component-edge-layer');svg.innerHTML='<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#222"/></marker></defs>';const nodes=new Map((c.nodes||[]).map(n=>[n.id,n]));for(const edge of c.edges||[]){const a=nodes.get(edge.from),b=nodes.get(edge.to);if(!a||!b)throw new Error('diagram edge endpoint missing');const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',(a.x||0)+5+'%');line.setAttribute('y1',(a.y||0)+5+'%');line.setAttribute('x2',(b.x||0)+5+'%');line.setAttribute('y2',(b.y||0)+5+'%');line.setAttribute('stroke',edge.muted?'#888':'#222');line.setAttribute('stroke-width','2');if(edge.dashed)line.setAttribute('stroke-dasharray','7 6');line.setAttribute('marker-end','url(#arrow)');svg.appendChild(line);}canvas.appendChild(svg);for(const n of c.nodes||[]){const d=editable('div','component-node',n.label,v=>n.label=v);d.style.left=(n.x||0)+'%';d.style.top=(n.y||0)+'%';canvas.appendChild(d);}host.appendChild(canvas);}
+const componentRenderers={'rich-text':renderRichText,'formula':renderFormula,'table':renderTable,'figure':renderFigure,'flow':renderNetwork,'diagram':renderNetwork};
+function renderComponent(c,host){const fn=componentRenderers[c.type];if(!fn)throw new Error('Unsupported component: '+c.type);fn(c,host);}
+function renderTitle(s){const c=s.components[0];const tm=ce('div','title-main');tm.appendChild(editable('div','t',c.title,v=>c.title=v));tm.appendChild(editable('div','s',c.subtitle,v=>c.subtitle=v));slideEl.appendChild(tm);const meta=ce('div','meta');['author','institute','date'].forEach(k=>meta.appendChild(editable('div',null,c[k],v=>c[k]=v)));slideEl.appendChild(meta);}
+function render(){sideEl.innerHTML='';slides.forEach((s,i)=>{const it=ce('div','slideitem'+(i===active?' active':''));it.appendChild(ce('span','num',String(i+1)));it.appendChild(ce('span','lbl',s.role==='title'?'标题：'+(s.components[0]?.title||''):s.frametitle));const up=ce('button','mini','↑');up.onclick=e=>{e.stopPropagation();if(i>0){[slides[i-1],slides[i]]=[slides[i],slides[i-1]];active=i-1;render();}};const dn=ce('button','mini','↓');dn.onclick=e=>{e.stopPropagation();if(i<slides.length-1){[slides[i+1],slides[i]]=[slides[i],slides[i+1]];active=i+1;render();}};const rm=ce('button','mini','✕');rm.onclick=e=>{e.stopPropagation();if(slides.length>1){slides.splice(i,1);active=Math.min(active,slides.length-1);render();}};it.append(up,dn,rm);it.onclick=()=>{active=i;render();};sideEl.appendChild(it);});const s=slides[active];slideEl.innerHTML='';slideEl.appendChild(ce('div','topbar'));if(s.role==='title')renderTitle(s);else{const fh=ce('div','framehead');fh.appendChild(editable('div','ft',s.frametitle,v=>s.frametitle=v));slideEl.appendChild(fh);const body=ce('div','body');const stack=ce('div','component-stack');for(const c of s.components)renderComponent(c,stack);body.appendChild(stack);slideEl.appendChild(body);}persist();fit();}
 function fit(){
   const w = stagewrap.clientWidth - 36;
   const sc = Math.min(1, w/1024);
@@ -200,6 +142,7 @@ document.getElementById('addTitle').onclick=()=>{ slides.splice(active+1,0,blank
 document.getElementById('addItem').onclick=()=>{ slides.splice(active+1,0,blankSlide('itemize')); active++; render(); };
 document.getElementById('addCols').onclick=()=>{ slides.splice(active+1,0,blankSlide('columns')); active++; render(); };
 document.getElementById('addBlock').onclick=()=>{ slides.splice(active+1,0,blankSlide('block')); active++; render(); };
+document.getElementById('exportBackup').onclick=()=>{const blob=new Blob([JSON.stringify(snapshot(),null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='beamer-live-draft-backup.json';a.click();URL.revokeObjectURL(url);};
 restore();
 render();
 </script>
