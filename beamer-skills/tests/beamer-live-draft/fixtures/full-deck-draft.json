@@ -1,0 +1,732 @@
+{
+  "schemaVersion": 2,
+  "deckId": "one-instrument-multiple-pathways",
+  "template": "clean",
+  "active": 0,
+  "slides": [
+    {
+      "id": "slide-1",
+      "role": "title",
+      "frametitle": "THE DILEMMA OF ONE INSTRUMENT AND MULTIPLE PATHWAYS",
+      "components": [
+        {
+          "id": "slide-1-c1",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-2",
+      "role": "content",
+      "frametitle": "One instrument can open several pathways",
+      "components": [
+        {
+          "id": "slide-2-c1",
+          "type": "diagram",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-2-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-3",
+      "role": "content",
+      "frametitle": "Conditioning on a collider opens a bias path",
+      "components": [
+        {
+          "id": "slide-3-c1",
+          "type": "diagram",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-3-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-4",
+      "role": "content",
+      "frametitle": "Gallen: an endogenous control can invalidate residualized Z",
+      "components": [
+        {
+          "id": "slide-4-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-4-c2",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-4-c3",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-5",
+      "role": "content",
+      "frametitle": "Gallen's induced violation is a residualization result",
+      "components": [
+        {
+          "id": "slide-5-c1",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-5-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-6",
+      "role": "content",
+      "frametitle": "Long-run estimates reverse sign more often",
+      "components": [
+        {
+          "id": "slide-6-c1",
+          "type": "figure",
+          "src": "figure.png",
+          "fullPageRaster": false
+        }
+      ]
+    },
+    {
+      "id": "slide-7",
+      "role": "content",
+      "frametitle": "Repeated use can challenge exclusion",
+      "components": [
+        {
+          "id": "slide-7-c1",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-8",
+      "role": "content",
+      "frametitle": "The test diagnoses disagreement, not truth",
+      "components": [
+        {
+          "id": "slide-8-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-8-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-9",
+      "role": "content",
+      "frametitle": "Mellon makes prior studies a pathway audit",
+      "components": [
+        {
+          "id": "slide-9-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-9-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-10",
+      "role": "content",
+      "frametitle": "Weak alternative paths can overturn weather-IV results",
+      "components": [
+        {
+          "id": "slide-10-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-10-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-11",
+      "role": "content",
+      "frametitle": "Pathway count is not pathway leverage",
+      "components": [
+        {
+          "id": "slide-11-c1",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-12",
+      "role": "content",
+      "frametitle": "The two approaches are complementary",
+      "components": [
+        {
+          "id": "slide-12-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-12-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-13",
+      "role": "content",
+      "frametitle": "Joint IV can break the control dilemma",
+      "components": [
+        {
+          "id": "slide-13-c1",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-13-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-14",
+      "role": "content",
+      "frametitle": "More IVs solve under-identification, not invalidity",
+      "components": [
+        {
+          "id": "slide-14-c1",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-14-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-15",
+      "role": "content",
+      "frametitle": "Only three-link weather pathways threaten exclusion",
+      "components": [
+        {
+          "id": "slide-15-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-15-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-16",
+      "role": "content",
+      "frametitle": "Archived GEFS forecasts isolate unexpected weather",
+      "components": [
+        {
+          "id": "slide-16-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-16-c2",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-16-c3",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-17",
+      "role": "content",
+      "frametitle": "GEFS makes precipitation the leading provisional threat",
+      "components": [
+        {
+          "id": "slide-17-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-17-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-18",
+      "role": "content",
+      "frametitle": "Our project asks whether validity travels across horizons",
+      "components": [
+        {
+          "id": "slide-18-c1",
+          "type": "diagram",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-18-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-19",
+      "role": "content",
+      "frametitle": "Aggregation can change the estimand itself",
+      "components": [
+        {
+          "id": "slide-19-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-19-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-20",
+      "role": "content",
+      "frametitle": "Validity belongs to the residual instrument",
+      "components": [
+        {
+          "id": "slide-20-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-20-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-21",
+      "role": "content",
+      "frametitle": "Aggregation exposes cross-period paths",
+      "components": [
+        {
+          "id": "slide-21-c1",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-21-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-22",
+      "role": "content",
+      "frametitle": "Aggregation shifts the instrument toward persistence",
+      "components": [
+        {
+          "id": "slide-22-c1",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-22-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-23",
+      "role": "content",
+      "frametitle": "Persistence changes which pathway dominates",
+      "components": [
+        {
+          "id": "slide-23-c1",
+          "type": "diagram",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-23-c2",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-23-c3",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-24",
+      "role": "content",
+      "frametitle": "Three shares answer three different questions",
+      "components": [
+        {
+          "id": "slide-24-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-24-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-25",
+      "role": "content",
+      "frametitle": "The five-year regressions use one matched county design",
+      "components": [
+        {
+          "id": "slide-25-c1",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-25-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-26",
+      "role": "content",
+      "frametitle": "Five-year TI is mostly persistent county variation",
+      "components": [
+        {
+          "id": "slide-26-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-26-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-27",
+      "role": "content",
+      "frametitle": "Observed climate controls do not erase relevance",
+      "components": [
+        {
+          "id": "slide-27-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-27-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-28",
+      "role": "content",
+      "frametitle": "Reduced forms link TI to many slow outcomes",
+      "components": [
+        {
+          "id": "slide-28-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-28-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-29",
+      "role": "content",
+      "frametitle": "Five-year evidence motivates a sharper covariance audit",
+      "components": [
+        {
+          "id": "slide-29-c1",
+          "type": "flow",
+          "nodes": [],
+          "edges": []
+        },
+        {
+          "id": "slide-29-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-30",
+      "role": "content",
+      "frametitle": "The monthly audit decomposes identifying covariance",
+      "components": [
+        {
+          "id": "slide-30-c1",
+          "type": "formula",
+          "tex": "x=1"
+        },
+        {
+          "id": "slide-30-c2",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-31",
+      "role": "content",
+      "frametitle": "Monthly relevance comes from multi-month components",
+      "components": [
+        {
+          "id": "slide-31-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-31-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-32",
+      "role": "content",
+      "frametitle": "One region-year supplies most monthly relevance",
+      "components": [
+        {
+          "id": "slide-32-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-32-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-33",
+      "role": "content",
+      "frametitle": "Regional controls reveal a strength--credibility tradeoff",
+      "components": [
+        {
+          "id": "slide-33-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-33-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-34",
+      "role": "content",
+      "frametitle": "Night lights flag frequency-aligned alternative paths",
+      "components": [
+        {
+          "id": "slide-34-c1",
+          "type": "table",
+          "headers": [
+            "A"
+          ],
+          "rows": [
+            "1"
+          ]
+        },
+        {
+          "id": "slide-34-c2",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "slide-35",
+      "role": "content",
+      "frametitle": "Long-run validity must be re-established after aggregation",
+      "components": [
+        {
+          "id": "slide-35-c1",
+          "type": "rich-text",
+          "items": [
+            "Point"
+          ]
+        }
+      ]
+    }
+  ]
+}

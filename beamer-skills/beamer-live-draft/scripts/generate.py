@@ -47,9 +47,12 @@ def latex_escape(s):
 
 
 def titleblock(slides):
-    first = next((s for s in slides if s.get("type") == "title"), None)
+    first = next((s for s in slides if s.get("type") == "title" or s.get("role") == "title"), None)
     if not first:
         return ""
+    if first.get("components"):
+        component = first["components"][0]
+        first = {**first, **component}
     lines = []
     if first.get("title"):
         lines.append(r"\title{%s}" % latex_escape(first["title"]))
@@ -72,7 +75,100 @@ def items_list(arr):
     return "\n".join(out)
 
 
+def rich_text_to_tex(component):
+    if isinstance(component.get("items"), list):
+        return items_list(component["items"])
+    if isinstance(component.get("columns"), list):
+        columns = []
+        width = 0.96 / max(1, len(component["columns"]))
+        for column in component["columns"]:
+            columns.extend([r"\column{%.2f\textwidth}" % width, items_list(column)])
+        return "\n".join([r"\begin{columns}", *columns, r"\end{columns}"])
+    title = latex_escape(component.get("blocktitle", ""))
+    body = latex_escape(component.get("body", ""))
+    return r"\begin{block}{%s}" % title + "\n" + body + "\n" + r"\end{block}"
+
+
+def formula_to_tex(component):
+    formula = str(component.get("tex", component.get("text", "")))
+    return "\\[\n%s\n\\]" % formula
+
+
+def table_to_tex(component):
+    headers = component.get("headers", [])
+    rows = component.get("rows", [])
+    width = max([len(headers), *(len(row) for row in rows)] or [1])
+    align = "l" + "c" * max(0, width - 1)
+    lines = [r"\begin{center}", r"\begin{tabular}{%s}" % align, r"\hline"]
+    if headers:
+        lines.extend([" & ".join(latex_escape(cell) for cell in headers) + r" \\", r"\hline"])
+    for row in rows:
+        padded = list(row) + [""] * (width - len(row))
+        lines.append(" & ".join(latex_escape(cell) for cell in padded) + r" \\")
+    lines.extend([r"\hline", r"\end{tabular}", r"\end{center}"])
+    return "\n".join(lines)
+
+
+def figure_to_tex(component):
+    if component.get("fullPageRaster"):
+        raise ValueError("Full-page raster slides are prohibited")
+    src = str(component.get("src", ""))
+    if not src:
+        raise ValueError("figure src is required")
+    return r"\begin{center}\includegraphics[width=0.92\textwidth,height=0.72\textheight,keepaspectratio]{\detokenize{%s}}\end{center}" % src
+
+
+def network_to_tikz(component):
+    nodes = {node.get("id"): node for node in component.get("nodes", [])}
+    lines = [r"\begin{center}", r"\begin{tikzpicture}[>=latex]"]
+    for node_id, node in nodes.items():
+        if not node_id:
+            raise ValueError("diagram node id is required")
+        x = float(node.get("x", 0)) / 10
+        y = -float(node.get("y", 0)) / 10
+        lines.append(r"\node[draw,rounded corners,align=center] (%s) at (%.2f,%.2f) {%s};" % (node_id, x, y, latex_escape(node.get("label", ""))))
+    for edge in component.get("edges", []):
+        start, end = edge.get("from"), edge.get("to")
+        if start not in nodes or end not in nodes:
+            raise ValueError("diagram edge endpoint missing: %s -> %s" % (start, end))
+        style = "->"
+        if edge.get("dashed"):
+            style += ",dashed"
+        if edge.get("muted"):
+            style += ",gray"
+        lines.append(r"\draw[%s] (%s) -- (%s);" % (style, start, end))
+    lines.extend([r"\end{tikzpicture}", r"\end{center}"])
+    return "\n".join(lines)
+
+
+COMPONENT_BUILDERS = {
+    "rich-text": rich_text_to_tex,
+    "formula": formula_to_tex,
+    "table": table_to_tex,
+    "figure": figure_to_tex,
+    "flow": network_to_tikz,
+    "diagram": network_to_tikz,
+}
+
+
+def component_to_tex(slide, component):
+    component_type = component.get("type")
+    builder = COMPONENT_BUILDERS.get(component_type)
+    if not builder:
+        raise ValueError("slide %s component %s unsupported type %s" % (slide.get("id", "<missing>"), component.get("id", "<missing>"), component_type))
+    try:
+        return builder(component)
+    except ValueError as exc:
+        raise ValueError("slide %s component %s: %s" % (slide.get("id", "<missing>"), component.get("id", "<missing>"), exc)) from exc
+
+
 def slide_to_frame(s):
+    if isinstance(s.get("components"), list):
+        if s.get("role") == "title":
+            return r"\begin{frame}[plain]" + "\n\\titlepage\n" + r"\end{frame}"
+        ft = latex_escape(s.get("frametitle", ""))
+        body = "\n\n".join(component_to_tex(s, component) for component in s["components"])
+        return r"\begin{frame}{%s}" % ft + "\n" + body + "\n" + r"\end{frame}"
     t = s.get("type")
     if t == "title":
         return r"\begin{frame}[plain]" + "\n\\titlepage\n" + r"\end{frame}"
@@ -102,7 +198,7 @@ def slide_to_frame(s):
         bd = latex_escape(s.get("body", ""))
         body = r"\begin{block}{%s}" % bt + "\n" + bd + "\n" + r"\end{block}"
         return r"\begin{frame}{%s}" % ft + "\n" + body + "\n" + r"\end{frame}"
-    return "% unknown slide type skipped: %s" % t
+    raise ValueError("unsupported legacy slide type %s" % t)
 
 
 def build(data, template_dir):
