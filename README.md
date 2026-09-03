@@ -42,7 +42,7 @@ meta/                   Skill & agent management
 
 | Skill | Description | Creator / Source |
 |-------|-------------|------------------|
-| [**beamer-format**](beamer-skills/beamer-format/SKILL.md) | Design academic Beamer slides with a clean, minimal aesthetic | Willie Song |
+| [**beamer-format**](beamer-skills/beamer-format/SKILL.md) | Design academic Beamer slides with a clean, minimal, vertically balanced aesthetic | Willie Song |
 | [**verify-tikz-layout**](beamer-skills/verify-tikz-layout/SKILL.md) | Compile, render, and visually verify TikZ layouts (including Beamer slides) | Willie Song |
 | [**beamer-live-draft**](beamer-skills/beamer-live-draft/SKILL.md) | Interactive Beamer-style HTML draft editor with autosave + tex/PDF transpiler | Willie Song |
 | [**beamer-progress-draft**](beamer-skills/beamer-progress-draft/SKILL.md) | Draft project progress and research notes as editable Beamer-like slides | Willie Song |

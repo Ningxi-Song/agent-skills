@@ -41,8 +41,10 @@ These rules override everything else. Violate none of them.
 7. **DISTRIBUTE BULLETS EVENLY.** Leave visible space between adjacent bullets
    whenever the slide has room. Spread the bullet group vertically across the
    usable body area so no bullets are cramped together and no large unused gap
-   appears below or between them. Use consistent `\itemsep` and balanced
-   vertical spacing rather than a dense default `itemize` layout.
+   appears above, below, or between them. A compact bullet cluster centered in
+   the body is also a failure, even when its top and bottom whitespace match.
+   Use consistent `\itemsep` and balanced vertical spacing rather than a dense
+   default `itemize` layout.
 
 ---
 
@@ -172,12 +174,17 @@ Content must breathe. Whitespace is not wasted space -- it guides attention.
 - Itemize environments: use `\setlength{\itemsep}{4pt}` or similar -- never
   the default tight item spacing, never stretched to fill the page.
 - Distribute bullets as evenly as practical within the usable body area;
-  avoid clustering them at the top when the slide has room.
+  avoid clustering them at the top or into a compact block in the vertical
+  center when the slide has room. The bullet group itself should span a
+  substantial portion of the usable body height, with consistent visible gaps
+  between adjacent bullets.
 
 **What to avoid:**
 - `\vfill` between every element -- creates uneven, floating gaps.
 - `[shrink]` frame option -- if content needs shrinking, it belongs on two
   slides or the appendix.
+- A tight bullet cluster centered between equal top and bottom whitespace --
+  equal outer margins do not make an under-spread content group balanced.
 - Content touching or nearly touching the frame edges -- keep natural
   Beamer margins intact.
 - Single bullet filling the entire text width as a long line -- shorten
@@ -191,6 +198,14 @@ Content must breathe. Whitespace is not wasted space -- it guides attention.
   space evenly from top to bottom.
 - Never leave a slide where bullets end in the middle and the bottom half
   is blank -- this signals poor planning.
+
+**Bullet coverage rule:**
+- A multi-bullet group must cover a substantial portion of the usable body
+  height. Do not place tightly spaced bullets as a compact slab in the vertical
+  center merely to create equal whitespace above and below.
+- Put whitespace into the gaps between bullets as well as around the group.
+  Use a modest, consistent `\itemsep`; do not use repeated `\vfill` commands
+  that make individual bullets float unpredictably.
 
 **Horizontal balance:**
 - Content must be roughly horizontally centered within the frame.
@@ -326,3 +341,5 @@ Before outputting any slide, check these 6 items. If any fails, fix first.
 - [ ] All bullet text same size. All table cell text same size.
 - [ ] Table or figure uses `\centering`, not left-aligned.
 - [ ] 3–5 bullet points, each on one line, no paragraphs.
+- [ ] Multi-bullet groups span the usable body height; bullets are not tightly
+      clustered in the vertical center, even with equal outer whitespace.
