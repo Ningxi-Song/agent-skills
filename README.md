@@ -20,6 +20,7 @@ engineering/            Software engineering practices
 ├── tdd
 ├── improve-codebase-architecture
 ├── project-hygiene
+├── worktree-github-sync
 └── zoom-out
 planning/               Project management & planning
 ├── to-issues
@@ -61,6 +62,7 @@ meta/                   Skill & agent management
 | [**tdd**](engineering/tdd/SKILL.md) | Test-driven development with red-green-refactor loop | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 | [**improve-codebase-architecture**](engineering/improve-codebase-architecture/SKILL.md) | Find deepening opportunities in a codebase | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 | [**project-hygiene**](engineering/project-hygiene/SKILL.md) | Keep mixed Git changes, duplicate files, and temporary outputs under control with risk-based audits | Willie Song |
+| [**worktree-github-sync**](engineering/worktree-github-sync/SKILL.md) | Manage task branches and worktrees, GitHub-first integration, mainline synchronization, and file upload exclusions | Willie Song |
 | [**zoom-out**](engineering/zoom-out/SKILL.md) | Zoom out for broader context / higher-level perspective | Matt Pocock, imported from [mattpocock/skills](https://github.com/mattpocock/skills) |
 
 ### planning/

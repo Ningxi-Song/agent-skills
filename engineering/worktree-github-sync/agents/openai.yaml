@@ -1,0 +1,4 @@
+interface:
+  display_name: "Worktree and GitHub Sync"
+  short_description: "Task worktrees, GitHub sync, and retained data"
+  default_prompt: "Use $worktree-github-sync to perform the requested task branch workflow and verify its synchronization state."
