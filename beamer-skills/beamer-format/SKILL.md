@@ -11,11 +11,13 @@ description: >
 # Beamer Format
 
 Produce academic presentation slides that meet economics seminar standards.
+
+Use the available `research-slide-narrative` skill as the default narrative. In this repository it is at [research-slide-narrative](../research-slide-narrative/SKILL.md). Its narrative and density guidance takes precedence over generic sequence, one-point, and bullet-count rules below. User instructions take precedence over both skills. Preserve explicitly requested tables, derivations, and appendix choices.
 See [EXAMPLES.md](EXAMPLES.md) for a complete deck outline.
 
 ## CRITICAL RULES — READ BEFORE GENERATING ANY SLIDE
 
-These rules override everything else. Violate none of them.
+Apply the following formatting defaults where compatible with user instructions and the narrative/density guidance above.
 
 1. **NO EMPTY BOTTOM.** If content ends above the vertical midpoint, the slide
    is broken. Fix: add content, split across slides, or use `\vfill` to push

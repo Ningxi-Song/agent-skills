@@ -1,0 +1,6 @@
+interface:
+  display_name: "Research Slide Narrative"
+  short_description: "Connect economic questions, predictions, and evidence"
+  default_prompt: "Use $research-slide-narrative to structure this research presentation and consolidate thin slides."
+policy:
+  allow_implicit_invocation: true

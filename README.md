@@ -6,6 +6,7 @@ A collection of reusable agent skills for AI-powered coding assistants (opencode
 
 ```
 beamer-skills/          Beamer & LaTeX/TikZ skills
+├── research-slide-narrative
 ├── beamer-format
 ├── verify-tikz-layout
 ├── beamer-live-draft
@@ -42,6 +43,7 @@ meta/                   Skill & agent management
 
 | Skill | Description | Creator / Source |
 |-------|-------------|------------------|
+| [**research-slide-narrative**](beamer-skills/research-slide-narrative/SKILL.md) | Default research narrative linking economic questions, predictions, evidence, and implications with substantive slide density | Willie Song |
 | [**beamer-format**](beamer-skills/beamer-format/SKILL.md) | Design academic Beamer slides with a clean, minimal, vertically balanced aesthetic | Willie Song |
 | [**verify-tikz-layout**](beamer-skills/verify-tikz-layout/SKILL.md) | Compile, render, and visually verify TikZ layouts (including Beamer slides) | Willie Song |
 | [**beamer-live-draft**](beamer-skills/beamer-live-draft/SKILL.md) | Interactive Beamer-style HTML draft editor with autosave + tex/PDF transpiler | Willie Song |

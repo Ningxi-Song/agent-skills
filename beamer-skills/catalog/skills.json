@@ -1,5 +1,12 @@
 [
   {
+    "id": "research-slide-narrative",
+    "path": "research-slide-narrative",
+    "link": "beamer-skills/research-slide-narrative/SKILL.md",
+    "description": "Default research narrative linking economic questions, predictions, evidence, and implications with substantive slide density",
+    "creator": "Willie Song"
+  },
+  {
     "id": "beamer-format",
     "path": "beamer-format",
     "link": "beamer-skills/beamer-format/SKILL.md",

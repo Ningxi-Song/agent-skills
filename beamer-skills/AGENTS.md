@@ -11,3 +11,7 @@ When adding, renaming, removing, or materially changing a skill:
 The catalog is the single source of truth for the Beamer skills index. Do not
 manually edit the generated Beamer section or its directory listing in the
 parent README.
+
+## Default research presentation narrative
+
+For academic research presentations, use `research-slide-narrative/SKILL.md` by default unless the user chooses another structure. It governs narrative and content density; pair it with the selected layout skill. Merge thin pages, keep results beside their interpretation, and preserve the user's required evidence and appendix policy.
